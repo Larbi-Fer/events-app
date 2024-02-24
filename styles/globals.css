@@ -4,6 +4,10 @@
 
     --primary-text: #000;
     --secondary-text: #fff;
+
+    --dark-bg1: #eee;
+    --dark-bg2: #ccc;
+    --dark-bg3: #ddd;
 }
 
 * {
@@ -75,7 +79,7 @@
 
 
 .inp {
-    padding: 5px 10px;
+    padding: 10px 20px;
     border-radius: 10px;
     border: 1px solid #5555;
     outline: none;
@@ -84,6 +88,16 @@
 
 .inp:hover, .inp:focus {
     border-color: #000;
+}
+
+.inp.fill {
+    border: none;
+    background-color: var(--dark-bg3);
+}
+
+.inp.fill:hover, .inp.fill:focus {
+    background-color: var(--dark-bg2);
+
 }
 
 .back-box {

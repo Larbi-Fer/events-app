@@ -1,0 +1,15 @@
+.auth-form {
+    width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: var(--dark-bg1);
+    padding: 20px 40px;
+    border-radius: 5px;
+}
+
+.auth-form h2 {
+    font-size: 24px;
+}
