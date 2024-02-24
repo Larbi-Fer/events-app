@@ -1,0 +1,154 @@
+:root {
+    --primary-background: #f50;
+    --secondary-background: #07d;
+
+    --primary-text: #000;
+    --secondary-text: #fff;
+}
+
+* {
+    font-size: 18px;
+    color: var(--primary-text);
+}
+
+.fullWidth {
+    width: 100% !important;
+}
+
+.round {
+    border-radius: 30px !important;
+}
+
+.btn {
+    padding: 5px 30px;
+    margin: 10px;
+    background: var(--primary-background);
+    border: 2px solid var(--primary-background);
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn:hover {
+    background-color: transparent;   
+}
+
+.circle-button {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    margin: 10px;
+    outline: none;
+    border-radius: 50%;
+    padding: 5px 5px;
+    border: none;
+    background-color: #ccc;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.circle-button span.content {
+    z-index: 2;
+}
+
+.circle-button span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.circle-button span.background {
+    background-color: #aaa9;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    transition: .4s;
+}
+
+.circle-button:active span.background {
+    width: 100%;
+    height: 100%;
+}
+
+
+.inp {
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1px solid #5555;
+    outline: none;
+    transition: .3s;
+}
+
+.inp:hover, .inp:focus {
+    border-color: #000;
+}
+
+.back-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    transition: .4s;
+}
+
+.back-box.blur {
+    backdrop-filter: blur(10px);
+    background-color: #2224;
+}
+
+.msg {
+    position: absolute;
+    background-color: #eee;
+    border-radius: 10px;
+    top: calc(50% + 10px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    opacity: 0;
+    transition: .5s;
+}
+
+.msg.start {
+    top: 50%;
+    opacity: 100%;
+    box-shadow: 20px 20px 30px #3337;
+}
+
+.msg div {
+    padding: 10px 20px;
+}
+.msg header {
+    border-bottom: 1px solid #000;
+    padding: 10px 15px;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.msg footer {
+    align-content: end;
+}
+
+.sm {
+    max-width: 340px;
+    width: 30%;
+}
+
+.md {
+    max-width: 550px;
+    width: 50%;
+}
+
+.lg {
+    max-width: 1000px;
+    width: 80%;
+}
+
+.xl {
+    max-width: 1500px;
+    width: 95%;
+}
