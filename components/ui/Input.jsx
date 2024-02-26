@@ -1,13 +1,22 @@
-import React from 'react'
+'use client'
 
-const Input = ({ text, round, fullWidth, variant, ...props }) => {
+import { useRef } from "react"
+
+const Input = ({ text, round, fullWidth, variant, onChange, ...props }) => {
     var cls = ''
-    if (round) cls += ' round'
     if (fullWidth) cls += ' fullWidth'
+    const ref = useRef()
+
+    const change = e => {
+        if(e.target.value === '') ref.current.classList.remove('selected')
+        else ref.current.classList.add('selected')
+        onChange(e)
+    }
+
     return (
-        <div>
-            <lable>{text}</lable>
-            <input type="text" {...props} className={'inp ' + cls + ' ' + variant} />
+        <div ref={ref} className={'inp ' + cls + ' ' + variant}>
+            <input type="text" {...props} required onChange={change} id={`id-${props.name}`} />
+            <label for={`id-${props.name}`}>{text}</label>
         </div>
     )
 }

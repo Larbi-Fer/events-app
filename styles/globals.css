@@ -13,6 +13,7 @@
 * {
     font-size: 18px;
     color: var(--primary-text);
+    box-sizing: border-box;
 }
 
 .fullWidth {
@@ -25,7 +26,6 @@
 
 .btn {
     padding: 5px 30px;
-    margin: 10px;
     background: var(--primary-background);
     border: 2px solid var(--primary-background);
     border-radius: 5px;
@@ -77,25 +77,46 @@
     height: 100%;
 }
 
-
 .inp {
+    position: relative;
+    width: fit-content;
+    padding-top: 15px;
+}
+
+.inp input {
     padding: 10px 20px;
     border-radius: 10px;
     border: 1px solid #5555;
     outline: none;
+    width: 100%;
     transition: .3s;
 }
 
-.inp:hover, .inp:focus {
+.inp input:hover, .inp input:focus {
     border-color: #000;
 }
 
-.inp.fill {
+.inp label {
+    position: absolute;
+    top: calc(50% + 7px);
+    left: 20px;
+    transform: translateY(-50%);
+    transition: .2s;
+}
+
+.inp input:focus + label, .selected label{
+    /* transform: translateY(-100%); */
+    font-size: 14px;
+    top: 2px;
+    left: 10px;
+} 
+
+.inp.fill input {
     border: none;
     background-color: var(--dark-bg3);
 }
 
-.inp.fill:hover, .inp.fill:focus {
+.inp.fill input:hover, .inp.fill input:focus {
     background-color: var(--dark-bg2);
 
 }
@@ -144,7 +165,7 @@
 }
 
 .msg footer {
-    align-content: end;
+    text-align: right;  
 }
 
 .sm {
@@ -165,4 +186,8 @@
 .xl {
     max-width: 1500px;
     width: 95%;
+}
+
+.hidden {
+    display: none;
 }
