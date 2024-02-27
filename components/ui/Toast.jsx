@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Error = ({ children }) => {
+const Toast = ({ children }) => {
 //   return children ? 
 //         <div style={{color: 'red', fontSize: '10px'}}>{children}</div>
 //     : null
@@ -9,4 +9,4 @@ const Error = ({ children }) => {
     )
 }
 
-export default Error
+export default Toast
