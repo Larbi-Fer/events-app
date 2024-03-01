@@ -1,4 +1,5 @@
 import { send } from "@utils/VerificationEmail"
+import code from "@utils/responses"
 import db from "@utils/database"
 import moment from "moment"
 import { hash } from 'bcrypt'
@@ -17,7 +18,7 @@ export const POST = async req => {
                     db.query('SELECT expires, users.id FROM users, verify WHERE email=? AND users.id=verify.id', [email], async(err, result) => {
                         if (err) return reject(err)
                         if (new Date(result[0].expires) < new Date()) {
-                                const {code, expires} = await codeHandler(email)
+                                const {code, expires} = await codeHandler(email, username)
                                 db.query("UPDATE verify SET code=?, expires=? WHERE id=?", [code, new Date(expires), result[0].id], (err, result) => {
                                     if (err) return reject(err)
                                     return resolve({ success: true, message: 'We send a new code to your email' })
@@ -30,10 +31,10 @@ export const POST = async req => {
                         db.query('SELECT * FROM users WHERE email=?', email, async (err, result) => {
                             try {
                                 if (err) return reject(err)
-                                const {code, expires} = await codeHandler(email)
+                                const {code, expires} = await codeHandler(email, username)
                                 db.query('INSERT INTO verify (id, code, expires) VALUES (?, ?, ?)', [ result[0].id, code, new Date(expires) ], err => {
                                     if (err) return reject(err)
-                                    return resolve({ success: true })
+                                    return resolve({ success: true, message: 'We send a code to your email'})
                                 })
                             } catch (error) {
                                 return reject({ error })
@@ -46,13 +47,13 @@ export const POST = async req => {
         })
         return NextResponse.json(res)
     } catch (error) {
-        return NextResponse.json({ error })
+        return NextResponse.json({ success: false, message: error.code})
     }
 }
 
-const codeHandler = async(email) => {
+const codeHandler = async(email, username) => {
     const code = Math.round(Math.random()*900000 + 100000)
-    await send(email, code)
+    console.log("email: ", await send(email, code, username))
     const expires = moment().add(1, 'days')
     return { code, expires }
 }

@@ -1,11 +1,11 @@
 .auth-form {
-    width: 500px;
+    width: 32%;
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: 10px;
+    transform: translate(0, -50%);
 
-    background-image: linear-gradient(25deg, #0af67150, #17b8ff50, #0af67150);
+    background-image: linear-gradient(25deg, #6d83ba80, #41599760, #6d83ba80);
     padding: 20px 40px;
     border-radius: 10px;
     backdrop-filter: blur(5px);
@@ -27,4 +27,22 @@
     height: 100%;
     /* filter: blur(3px); */
     /* backdrop-filter: blur(3px); */
+}
+
+@media screen and (max-width: 950px) {
+    .bg {
+        left: -40%;
+        width: 140%;
+    }
+    .auth-form {
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .auth-form {
+        width: 90%;
+    }
 }

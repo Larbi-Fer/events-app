@@ -1,12 +1,41 @@
-import React from 'react'
+'use client'
 
-const Toast = ({ children }) => {
-//   return children ? 
-//         <div style={{color: 'red', fontSize: '10px'}}>{children}</div>
-//     : null
-    return (
-        <div style={{color: 'red', fontSize: '10px'}}>{children}</div>
-    )
+import '@styles/toast.css';
+import { useEffect } from 'react';
+import ReactDOMServer from 'react-dom/server';
+
+const Toast = ({ show, text, type, after }) => {
+
+  useEffect(() => {
+    if (!show) return
+    const { id, jsx } = ToastElement({ text, type });
+    const toaNode = ReactDOMServer.renderToStaticMarkup(jsx);
+    document.body.insertAdjacentHTML('beforeend', toaNode);
+    setTimeout(() => {
+      const el = document.getElementById(id)
+      el.classList.add('inactive');
+      setTimeout(() => {
+        document.body.removeChild(el);
+        after()
+      }, 300)
+    }, 5000)
+  }, [show, text])
+
+  return null
 }
+
+const ToastElement = ({ text, type }) => {
+  
+  const rand = "id-" + Math.floor(Math.random() * 9000)
+  
+  return {id: rand, jsx: (
+    <div className={`toast ${type}`} id={rand}>
+      <div className="toast-content">
+        <div className="message">
+          {text}
+        </div>
+      </div>
+    </div>
+  )}}
 
 export default Toast

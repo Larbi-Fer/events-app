@@ -19,7 +19,7 @@ const Message = ({ show, onClose, title, children, width } = { width: String, sh
         } else {
             boxRef.current?.classList.remove('blur')
             msgRef.current?.classList.remove('start')
-            setTimeout(() => allRef.current.classList.add('hidden'), 300)
+            setTimeout(() => allRef.current?.classList.add('hidden'), 300)
         }
     }, [show])
 

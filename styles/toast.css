@@ -1,0 +1,84 @@
+.toast.success {
+    --col: #0f1;
+}
+
+.toast.error {
+    --col: #f00;
+}
+
+.toast.info {
+    --col: #00f;
+}
+
+.toast.warning {
+    --col: #f96115;
+}
+
+.toast {
+    position: absolute;
+    left: 10px;
+    bottom: 30px;
+    padding: 10px 30px;
+    overflow: hidden;
+    border-radius: 10px;
+    transform: translateX(calc(-100% - 10px));
+    background-image: linear-gradient(to right, var(--col), var(--dark-bg3) 20%);
+    animation: show .3s ease 1 forwards;
+}
+
+.toast::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    /* background-color: var(--primary-background); */
+    background-color: var(--col);
+    animation: progress 5s linear forwards;
+}
+
+.toast.inactive {
+    animation: hidden .3s ease 1 forwards;
+}
+
+@keyframes show {
+    0% {
+        transform: translateX(calc(-100% - 10px));
+        opacity: 0;
+    }
+    40% {
+        transform: translateX(5%);
+    }
+    80% {
+        transform: translateX(-5%);
+    }
+    100% {
+        opacity: 100%;
+        transform: translateX(0);
+    }
+}
+
+@keyframes hidden {
+    0% {
+        transform: translateX(0);
+    }
+    40% {
+        transform: translateX(-5%);
+    }
+    80% {
+        transform: translateX(5%);
+    }
+    100% {
+        transform: translateX(calc(-100% - 10px));
+    }
+}
+
+@keyframes progress {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0;
+    }
+}
