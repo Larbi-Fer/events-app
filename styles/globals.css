@@ -124,6 +124,8 @@
 
 }
 
+/* Message box */
+
 .back-box {
     position: absolute;
     top: 0;
@@ -159,18 +161,22 @@
     box-shadow: 20px 20px 30px #3337;
 }
 
-.msg div {
-    padding: 10px 20px;
+.msg div.content {
+    margin: 10px 20px;
 }
-.msg header {
+.msg .header {
     border-bottom: 1px solid #000;
     padding: 10px 15px;
     font-size: 23px;
     font-weight: bold;
 }
 
-.msg footer {
-    text-align: right;  
+.msg .footer {
+    text-align: right;
+}
+
+.msg .footer button {
+    margin: 10px;
 }
 
 .sm {
@@ -195,4 +201,29 @@
 
 .hidden {
     display: none;
+}
+
+.vibration {
+    animation: vib .5s ease;
+}
+
+@keyframes vib {
+    0% {
+        transform: translateX(-10px);
+    }
+    20% {
+        transform: translateX(10px);
+    }
+    40% {
+        transform: translateX(-10px);
+    }
+    60% {
+        transform: translateX(10px);
+    }
+    80% {
+        transform: translateX(-10px);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
