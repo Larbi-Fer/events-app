@@ -23,6 +23,7 @@
     border-radius: 10px;
     transform: translateX(calc(-100% - 10px));
     background-image: linear-gradient(to right, var(--col), var(--dark-bg3) 20%);
+    z-index: 9000;
     animation: show .3s ease 1 forwards;
 }
 

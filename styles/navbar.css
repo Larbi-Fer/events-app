@@ -117,12 +117,14 @@ header .show-items span {
         right: 10px;
         top: 70px;
         width: max-content;
-        height: 0;
+        display: none;
         background-color: var(--primary-bgo);
         box-shadow: 0 0px 10px var(--secondary-bgo);
         backdrop-filter: blur(10px);
         overflow: hidden;
+        opacity: 0;
         transition: all .3s ease 0s;
+        animation: hide-nav .3s ease 0s;
     }
 
     nav ul{
@@ -137,8 +139,32 @@ header .show-items span {
     }
     
     nav.active {
+        display: block;
         opacity: 100%;
         height: max-content;
-        animation: show-items 1s ease;
+        animation: show-nav .3s ease 0s;
+    }
+}
+
+@keyframes show-nav {
+    0% {
+        display: block;
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes hide-nav {
+    0% {
+        display: block;
+        transform: scale(1);
+    }
+    99% {
+        transform: scale(0);
+    }
+    100% {
+        display: none;
     }
 }

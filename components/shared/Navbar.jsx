@@ -20,7 +20,7 @@ const Navbar = () => {
     <header>
       <h2 className="logo">Events</h2>
       <nav ref={ref}>
-        { !session.data ?
+        { session.data ?
         <ul className="nav-links">
           <li><Link href='/home'>Home</Link></li>
           <li><Link href='#'>Create New Event</Link></li>
@@ -29,10 +29,10 @@ const Navbar = () => {
         : null}
       </nav>
       <div className="buttons">
-        { !session.data ?
+        { session.data ?
             <>
               <input type="text" placeholder="Search ..." />
-              <Button>Profile</Button>
+              <Button round>Profile</Button>
             </>
           :
             <>

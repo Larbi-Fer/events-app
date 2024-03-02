@@ -1,16 +1,19 @@
 'use client'
-
 import '@styles/toast.css';
+
 import { useEffect } from 'react';
+
 import ReactDOMServer from 'react-dom/server';
 
 const Toast = ({ show, text, type, after }) => {
 
   useEffect(() => {
-    if (!show) return
+    if (!show || !text) return
+    // Create a new element on body
     const { id, jsx } = ToastElement({ text, type });
     const toaNode = ReactDOMServer.renderToStaticMarkup(jsx);
     document.body.insertAdjacentHTML('beforeend', toaNode);
+    // remove the toast after 5 seconds
     setTimeout(() => {
       const el = document.getElementById(id)
       el.classList.add('inactive');

@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <div>
       <Button onClick={() => setT(true)}>Test</Button>
-      <Message show={t} onClose={() => setT(false)}>Test</Message>
+      <Message show={t} onClose={() => setT(false)} buttons={[{text: 'OK'}]} title='Message'>Test</Message>
     </div>
   );
 }

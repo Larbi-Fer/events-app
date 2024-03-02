@@ -1,7 +1,9 @@
 import AuthFrom from "@components/shared/AuthFrom";
 
 export const metadata = {
- title: 'Activate your account',
+  title: {
+    template: '%s - Authentication'
+  },
 }
 
 export default function RootLayout({ children }) {

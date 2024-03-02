@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useState } from "react"
+import { useRef, useState } from "react"
 
 import Input from "@components/ui/Input"
 import Message from "@components/ui/Message"
@@ -11,12 +11,19 @@ const Verification = ({afterClose}) => {
   const pathname = usePathname()
   const router = useRouter()
   const email = useSearchParams().get('email')
+  const ref = useRef()
 
   const [code, setCode] = useState()
   const [msg, setMsg] = useState()
 
   const onSubmit = async e => {
     e.preventDefault()
+    if(!code) {
+      console.log(ref.current)
+      ref.current?.classList.add('vibration')
+      setTimeout(() => ref.current?.classList.remove('vibration'), 500)
+      return
+    }
     const data = (await (await fetch('/api/auth/verify', {
       body: JSON.stringify({ email, code }),
       method: 'POST',
@@ -29,10 +36,10 @@ const Verification = ({afterClose}) => {
   }
 
   return (
-    <Message title='Activate your account' show={pathname == '/verify'} onClose={() => router.push('/signup') || afterClose()} width='md' >
-      <form onSubmit={onSubmit}>
+    <Message title='Activate your account' show={pathname == '/verify'} onClose={() => router.push('/signup') || afterClose()} width='md' buttons={[{ text: 'VALIDATE', onClick: onSubmit }]} >
+      <form ref={ref} onSubmit={onSubmit}>
         <h2 style={{textAlign: "center"}}>{email}</h2>
-        <Input text="code" type='number' value={code} onChange={e => setCode(e.target.value)} variant='fill' />
+        <Input name='code' text="code" type='number' value={code} onChange={e => setCode(e.target.value)} variant='fill' fullWidth />
         <Toast show={msg!=''} text={msg} after={() => setMsg('')} type='error' />
       </form>
     </Message>

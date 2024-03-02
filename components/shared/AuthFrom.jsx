@@ -26,12 +26,15 @@ const AuthFrom = () => {
   const session = useSession()
 
   const [fields, setFields] = useState(flds)
-  const [msg, setMsg] = useState('')
+  const [msg, setMsg] = useState(['', 'error'])
 
   const isLogin = pathname == '/login'
 
   useEffect(() => {
-    if (session.status == "authenticated") router.push('/home') || setMsg('You are now logged in')
+    if (session.status == "authenticated") {
+      setMsg(['You are now logged in', 'success'])
+      router.push('/home')
+    }
   }, [session])
   
 
@@ -43,7 +46,7 @@ const AuthFrom = () => {
     e.preventDefault()
     if(isLogin) {
       const res = await signIn('credentials', { email: fields.email, password: fields.password, redirect: false })
-      if (res?.error) return setMsg(code.auth[res.error])
+      if (res?.error) return setMsg([code.auth[res.error], 'error'])
       router.push('/home')
     } else {
       const data = await (await fetch('/api/auth/signup', {
@@ -51,7 +54,7 @@ const AuthFrom = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       })).json()
-      setMsg(data.message)
+      setMsg([data.message, data.success ? 'success' : 'error'])
       if (data.success) return router.push(`/verify?email=${fields.email}`)
     }
   }
@@ -66,7 +69,7 @@ const AuthFrom = () => {
 
         <Button fullWidth round>{isLogin ? 'LOGIN' : 'SIGN UP'}</Button>
 
-        <Toast show={msg != ''} text={msg} type='error' after={() => setMsg('')} />
+        <Toast show={msg[0] != ''} text={msg[0]} type={msg[1]} after={() => setMsg('')} />
       </form>
       <Verification afterClose={() => setFields(f => ({...f, password: ''}))} />
     </>

@@ -3,15 +3,17 @@
 import React, { useEffect, useRef, useState } from "react"
 import Button from "./Button"
 
-const Message = ({ show, onClose, title, children, width } = { width: String, show: String, onClose: () => null, title: String, children: React.Component }) => {
+// buttons: { text, onClick, props }
+const Message = ({ show, onClose, title, children, width, buttons } = { width: String, show: String, onClose: () => null, title: String, children: React.Component }) => {
     const boxRef = useRef()
     const msgRef = useRef()
     const allRef = useRef()
-    const [s, setS] = useState(show)
 
     useEffect(() => {
         if(show) {
+            // Show the box
             allRef.current.classList.remove('hidden');
+            // Smooth effect
             setTimeout(() => {
                 boxRef.current.classList.add('blur')
                 msgRef.current.classList.add('start')
@@ -23,23 +25,22 @@ const Message = ({ show, onClose, title, children, width } = { width: String, sh
         }
     }, [show])
 
-    useEffect(() => {
-    }, [s])
-
     return (
         <div ref={allRef} className="hidden">
             <div ref={boxRef} className="back-box" onClick={onClose}></div>
             <div ref={msgRef} className={"msg " + width}>
-                <header>
+                <div className="header">
                     {title}
-                </header>
-                <div>
+                </div>
+                <div className="content">
                     {children}
                 </div>
-                <footer>
-                    <Button>OK</Button>
+                <div className="footer">
+                    { buttons?.map(btn => (
+                        <Button {...btn?.props} onClick={btn.onClick}>{btn.text}</Button>
+                    )) }
                     <Button onClick={onClose}>CANCEL</Button>
-                </footer>
+                </div>
             </div>
         </div>
     )
