@@ -86,40 +86,40 @@
     padding-top: 15px;
 }
 
-.inp input {
+.inp input, .inp textarea {
     padding: 10px 20px;
     border-radius: 10px;
     border: 1px solid #5555;
     outline: none;
     width: 100%;
     transition: .3s;
+    resize: none;
 }
 
-.inp input:hover, .inp input:focus {
+.inp input:hover, .inp input:focus, .inp textarea:hover, .inp textarea:focus {
     border-color: #000;
 }
 
 .inp label {
     position: absolute;
-    top: calc(50% + 7px);
+    top: 35px;
     left: 20px;
     transform: translateY(-50%);
     transition: .2s;
 }
 
-.inp input:focus + label, .selected label{
-    /* transform: translateY(-100%); */
+.inp input:focus + label, .inp textarea:focus + label, .selected label{
     font-size: 14px;
     top: 2px;
     left: 10px;
 } 
 
-.inp.fill input {
+.inp.fill input, .inp.fill textarea {
     border: none;
     background-color: var(--dark-bg3);
 }
 
-.inp.fill input:hover, .inp.fill input:focus {
+.inp.fill input:hover, .inp.fill textarea:hover, .inp.fill input:focus, .inp.fill textarea:focus {
     background-color: var(--dark-bg2);
 
 }
@@ -201,6 +201,18 @@
 
 .hidden {
     display: none;
+}
+
+.c1, .c2 {
+    padding-top: 10px;
+}
+
+.c2 {
+    display: flex;
+}
+
+.c2 > div:first-child {
+    margin-right: 10px;
 }
 
 .vibration {
