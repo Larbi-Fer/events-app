@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 
 const Input = ({ text, round, fullWidth, variant, onChange, multiLine, inpRef, required, ...props }) => {
     const ref = useRef()
@@ -8,8 +8,13 @@ const Input = ({ text, round, fullWidth, variant, onChange, multiLine, inpRef, r
     var cls = ''
     if (fullWidth) cls += ' fullWidth'
 
+    useEffect(() => {
+      if (props.value) ref.current.classList.add('selected')
+    }, [])
+    
+
     const change = e => {
-        if(e.target.value === '') ref.current.classList.remove('selected')
+        if(e.target.value == '') ref.current.classList.remove('selected')
         else ref.current.classList.add('selected')
         onChange(e)
     }
@@ -18,7 +23,7 @@ const Input = ({ text, round, fullWidth, variant, onChange, multiLine, inpRef, r
     return (
         <div ref={ref} className={'inp ' + cls + ' ' + variant}>
             { multiLine ?
-                <textarea required={required} onChange={change} id={`id-${props.name}`}  ref={inpRef} /> :
+                <textarea required={required} onChange={change} id={`id-${props.name}`}  ref={inpRef} {...props} /> :
                 <input type="text" {...props} required={required} onChange={change} id={`id-${props.name}`}  ref={inpRef} />
             }
             <label for={`id-${props.name}`}>{text}</label>
