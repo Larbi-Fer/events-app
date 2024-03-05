@@ -28,7 +28,7 @@ function FileUploader({ imageUrl, onFieldChange, setFiles, text } = { imageUrl: 
         {imageUrl ? (
           <div>
             <img src={imageUrl} alt="Image" />
-            <Button round onClick={() => setFiles(null) || onFieldChange(null)}>Delete</Button>
+            <Button round onClick={() => setFiles([]) || onFieldChange('')}>Delete</Button>
           </div>
         ) : <div> Drop files here! </div>}
       </div>

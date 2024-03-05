@@ -1,6 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import { useUploadThing } from '@utils/uploadthing'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import moment from 'moment'
 
 import FileUploader from '@components/ui/FileUploader'
@@ -26,13 +29,18 @@ const fields = {
     num: 50
   },
   url: '',
-  attend: true
+  attendButton: true
 }
 
-const EventForm = () => {
-  const [files, setFiles] = useState(Array(File))
+const EventForm = ({ type }) => {
+  const [files, setFiles] = useState([])
   const [flds, setFlds] = useState(fields)
   const [msg, setMsg] = useState(['', ''])
+  const [loading, setLoading] = useState(false)
+  const session = useSession()
+  const router = useRouter()
+
+  const { startUpload } = useUploadThing("imageUploader")
 
   // To change fields except for time
   const handleChange = e => {
@@ -55,21 +63,52 @@ const EventForm = () => {
   const handleAttend = type => () => {
     // onChange => 'attend' quistion, maxChange => 'max' quistion
     if (type === 'onChange') {
-      if (!flds.max.is || !flds.attend) return setFlds(old => ({ ...old, attend: !old.attend }))
+      if (!flds.max.is || !flds.attendButton) return setFlds(old => ({ ...old, attendButton: !old.attendButton }))
       // In this case, if he wants to uncheck, he must have cancelled the max
       setMsg(["You must uncheck the Max number of people", 'error'])
       const el = document.getElementById('id-max-comp')
       el.classList.add('vibration')
       setTimeout(() => el.classList.remove('vibration'), 500)
     } else {
-      if (flds.attend) return
+      if (flds.attendButton) return
       // In this case, is check the attend field automatically
-      setFlds(old => ({...old, attend:!old.attend }))
+      setFlds(old => ({...old, attendButton:!old.attendButton }))
     }
   }
 
+  const handleSubmit = async e => {
+    e.preventDefault()
+    if(loading) return
+    setLoading(true)
+
+    if(files.length > 0) {
+      const uploadedImages = await startUpload(files)
+
+      if(!uploadedImages) {
+        return
+      }
+      flds.imageUrl = uploadedImages[0].url
+    }
+    flds.creator = session.data.user.id;
+
+    if (type == 'Create') {
+      const data = await (await fetch('/api/event', {
+        body: JSON.stringify(flds),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      })).json()
+
+      if ( data.success ) {
+        setMsg([ 'The event has been created', 'success' ])
+        router.push(`/event/${data.id}`)
+      }
+    }
+
+    setLoading(false)
+  }
+
   return (
-    <form style={{padding: "0 20px 100px 20px"}}>
+    <form onSubmit={handleSubmit} style={{padding: "0 20px 100px 20px"}}>
       <div className="c1">
         <Input text='category' variant='fill' onChange={handleChange} value={flds.category} name="category" fullWidth />
       </div>
@@ -103,12 +142,12 @@ const EventForm = () => {
         </div>
       </div>
       <div className="c1" style={{ paddingTop: 25 }}>
-          <input type="checkbox" checked={flds.attend} onChange={handleAttend('onChange')} id='id-attend' />
+          <input type="checkbox" checked={flds.attendButton} onChange={handleAttend('onChange')} id='id-attend' />
           <label htmlFor='id-attend'><b>"I will attend"</b> Button?</label>
       </div>
 
       <div className="c1" style={{ paddingTop: 25 }}>
-        <Button>PUBLISH</Button>
+        <Button disabled={loading}>PUBLISH {loading ? '...' : ''}</Button>
       </div>
 
       <Toast text={msg[0]} show={msg[0]!=''} after={() => setMsg(['', ''])} type={msg[1]} />

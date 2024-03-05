@@ -9,7 +9,7 @@ const Create = () => {
   return (
     <div className='container'>
         <h3>Create Event</h3>
-        <EventForm type='create' />
+        <EventForm type='Create' />
     </div>
   )
 }
