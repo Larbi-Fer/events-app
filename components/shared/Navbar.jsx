@@ -23,7 +23,7 @@ const Navbar = () => {
         { session.data ?
         <ul className="nav-links">
           <li><Link href='/home'>Home</Link></li>
-          <li><Link href='#'>Create New Event</Link></li>
+          <li><Link href='/create'>Create New Event</Link></li>
           <li><Link href='#'>My events</Link></li>
         </ul>
         : null}

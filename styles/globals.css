@@ -86,6 +86,7 @@
     padding-top: 15px;
 }
 
+
 .inp input, .inp textarea {
     padding: 10px 20px;
     border-radius: 10px;
@@ -94,6 +95,11 @@
     width: 100%;
     transition: .3s;
     resize: none;
+}
+
+.inp input:disabled {
+    background-color: var(--dark-bg3) !important;
+    color: var(--secondary-bgo);
 }
 
 .inp input:hover, .inp input:focus, .inp textarea:hover, .inp textarea:focus {
@@ -111,7 +117,7 @@
 .inp input:focus + label, .inp textarea:focus + label, .selected label{
     font-size: 14px;
     top: 2px;
-    left: 10px;
+    left: 10px !important;
 } 
 
 .inp.fill input, .inp.fill textarea {
@@ -203,6 +209,8 @@
     display: none;
 }
 
+/* Columns */
+
 .c1, .c2 {
     padding-top: 10px;
 }
@@ -214,6 +222,68 @@
 .c2 > div:first-child {
     margin-right: 10px;
 }
+
+/* Drop zone */
+
+.drop-zone {
+    --img-hight: 252px;
+    display: grid;
+    align-content: center;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: var(--img-hight);
+    background-color: var(--dark-bg3);
+    border-radius: 10px;
+    margin-top: 15px;
+    transition: all .3s;
+}
+
+.drop-zone:hover {
+    background-color: var(--dark-bg2);
+}
+
+.drop-zone img {
+    width: 100%;
+    height: var(--img-hight);
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.drop-zone label {
+    position: absolute;
+    top: -21px;
+    left: 10px;
+    font-size: 14px;
+}
+
+.drop-zone button {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+/* Check Items */
+
+.check-item {
+    position: relative;
+}
+
+.check-item input[type="checkbox"] {
+    position: absolute;
+    bottom: 12px;
+    left: 5px;
+}
+
+.check-item input {
+    padding-left: 30px;
+}
+
+.check-item label {
+    left: 28px;
+}
+
+/* Animations */
 
 .vibration {
     animation: vib .5s ease;
@@ -237,5 +307,20 @@
     }
     100% {
         transform: translateX(0);
+    }
+}
+
+@media screen and (max-width: 665px) {
+    .c2 {
+        display: block;
+        padding-top: 0;
+    }
+
+    .c2 div {
+        margin-top: 10px;
+    }
+
+    .drop-zone {
+        margin-top: 20px !important;
     }
 }
