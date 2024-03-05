@@ -1,11 +1,12 @@
 'use client'
 
+import { useState } from 'react'
+import moment from 'moment'
+
 import FileUploader from '@components/ui/FileUploader'
 import Input from '@components/ui/Input'
 import Button from '@components/ui/Button'
 import Toast from '@components/ui/Toast'
-import React, { useState } from 'react'
-import moment from 'moment'
 
 const fields = {
   category: '',
@@ -33,10 +34,12 @@ const EventForm = () => {
   const [flds, setFlds] = useState(fields)
   const [msg, setMsg] = useState(['', ''])
 
+  // To change fields except for time
   const handleChange = e => {
     setFlds(old => ({ ...old, [e.target.name]: e.target.value}))
   }
 
+  // To change time fields only
   const handleChangeDate = e => {
     if (!e.target.value) return setMsg(["You can't clear", 'error'])
     const date = moment(e.target.value)
@@ -48,15 +51,19 @@ const EventForm = () => {
     else return setDate()
   }
 
+  // Special for the question "`is attend` Button?"
   const handleAttend = type => () => {
+    // onChange => 'attend' quistion, maxChange => 'max' quistion
     if (type === 'onChange') {
       if (!flds.max.is || !flds.attend) return setFlds(old => ({ ...old, attend: !old.attend }))
+      // In this case, if he wants to uncheck, he must have cancelled the max
       setMsg(["You must uncheck the Max number of people", 'error'])
       const el = document.getElementById('id-max-comp')
       el.classList.add('vibration')
       setTimeout(() => el.classList.remove('vibration'), 500)
     } else {
       if (flds.attend) return
+      // In this case, is check the attend field automatically
       setFlds(old => ({...old, attend:!old.attend }))
     }
   }
@@ -72,7 +79,6 @@ const EventForm = () => {
       </div>
       <div className="c2">
         <Input text='description' variant='fill' onChange={handleChange} value={flds.description} name="description" fullWidth multiLine rows={11} />
-        {/* <Input text='files' variant='fill' onChange={handleChange} value={flds.tags} fullWidth /> */}
         <FileUploader text='Cover' setFiles={setFiles} imageUrl={flds.imageUrl} onFieldChange={url => setFlds(old => ({ ...old, imageUrl: url }))} />
       </div>
       <div className="c1">
