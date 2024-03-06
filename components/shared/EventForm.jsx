@@ -81,6 +81,7 @@ const EventForm = ({ type }) => {
     if(loading) return
     setLoading(true)
 
+    // Upload the image
     if(files.length > 0) {
       const uploadedImages = await startUpload(files)
 
@@ -92,6 +93,7 @@ const EventForm = ({ type }) => {
     flds.creator = session.data.user.id;
 
     if (type == 'Create') {
+      // Create a new event to database
       const data = await (await fetch('/api/event', {
         body: JSON.stringify(flds),
         method: 'POST',
@@ -102,6 +104,7 @@ const EventForm = ({ type }) => {
         setMsg([ 'The event has been created', 'success' ])
         router.push(`/event/${data.id}`)
       }
+      setMsg([ "Something's wrong", 'error' ])
     }
 
     setLoading(false)

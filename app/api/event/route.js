@@ -1,5 +1,6 @@
-import db from '@utils/database'
 import { NextResponse } from 'next/server'
+
+import db from '@utils/database'
 
 // Create a new event
 export const POST = async req => {
@@ -14,14 +15,13 @@ export const POST = async req => {
             keys.push(key)
         }
 
-
+        // Edit some fields
         if (!body.imageUrl) pushToQu('image', 'https://images/defaultEvent')
         else pushToQu('image', body.imageUrl)
         if (body.dueDate.is) pushToQu('dueDate', body.dueDate.date)
         if (body.max.is) pushToQu('max', body.max.num)
 
         const qu = 'INSERT INTO events (' + keys.join(', ') + ') VALUES (' + keys.map((v, i) => '?') + ')'
-        console.log(keys.map(() => '?').join(', '))
 
         const result = await new Promise((resolve, reject) => {
             db.query(qu, params, (err, res) => {
@@ -30,7 +30,6 @@ export const POST = async req => {
             })
         })
 
-        console.log(result)
         return NextResponse.json({ success: true, id: result.insertId })
     } catch (error) {
         console.log(error)
