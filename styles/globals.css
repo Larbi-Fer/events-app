@@ -18,8 +18,13 @@
 
 * {
     font-size: 18px;
-    color: var(--primary-text);
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: var(--primary-text);
 }
 
 .fullWidth {
