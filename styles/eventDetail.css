@@ -1,0 +1,77 @@
+
+.event .left {
+    width: calc(50% - 50px);
+}
+
+.event .right, .event .left {
+    padding: 0 15px;
+}
+
+.event .left > div {
+    margin-bottom: 10px;
+}
+.event .left > div a {
+    text-decoration: none;
+}
+
+.event .left img {
+    width: -webkit-fill-available;
+    border-radius: 10px;
+}
+
+/* .event .right .tags label::before {
+    content: '#';
+} */
+
+.event .right {
+    width: 100%;
+}
+
+.event .right > div {
+    margin-left: 10px;
+}
+
+.event .right .title {
+    font-size: 30px;
+    margin-left: -10px;
+}
+
+.event .right .tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px 10px;
+}
+
+.event .right .tags label, .event .left .category {
+    padding: 2px 15px;
+    margin: 0 5px;
+    width: max-content;
+    font-size: 15px;
+    background-color: var(--dark-bg3);
+    color: #555;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.event .right .desc  h2 {
+    font-size: 22px;
+}
+
+.event .right .desc p {
+    margin-left: 15px;
+}
+
+.event .right .location, .event .right .schedule {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.event .right .location i, .event .right .schedule i {
+    margin-right: 5px;
+    color: var(--primary-background);
+}
+
+.event .right .url {
+    margin-top: 10px;
+}
