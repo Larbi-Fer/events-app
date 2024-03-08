@@ -102,7 +102,7 @@ const EventForm = ({ type }) => {
 
       if ( data.success ) {
         setMsg([ 'The event has been created', 'success' ])
-        router.push(`/event/${data.id}`)
+        return router.push(`/event/${data.id}`)
       }
       setMsg([ "Something's wrong", 'error' ])
     }

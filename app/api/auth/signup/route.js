@@ -53,7 +53,7 @@ export const POST = async req => {
 
 const codeHandler = async(email, username) => {
     const code = Math.round(Math.random()*900000 + 100000)
-    console.log("email: ", await send(email, code, username))
+    await send(email, code, username)
     const expires = moment().add(1, 'days')
     return { code, expires }
 }

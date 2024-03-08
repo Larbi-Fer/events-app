@@ -1,4 +1,5 @@
 import db from "@utils/database"
+import { send } from "@utils/VerificationEmail"
 import { NextResponse } from "next/server"
 
 // TODO: Edit the messages
