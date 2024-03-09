@@ -75,3 +75,49 @@
 .event .right .url {
     margin-top: 10px;
 }
+
+/* Attend and countdown */
+
+body {
+    padding-bottom: 60px;
+}
+
+.attend {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    padding: 5px 50px;
+    /* background: var(--dark-bg3); */
+    background: var(--dark-bg3);
+    border-top-left-radius: 40px;
+}
+
+.attend::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: -4px;
+    width: 34px;
+    height: 72px;
+    transform: rotate(27deg);
+    border-top-left-radius: 30px;
+    background-color: var(--dark-bg3);
+}
+
+.attend .button {
+    display: grid;
+    margin-right: 15px;
+    padding-right: 15px;
+    border-right: 1px solid var(--primary-text);
+}
+
+.attend .button span {
+    font-size: 15px;
+}
+
+.attend .countdown.disabled, .attend .button span.disabled {
+    color: #f00;
+    text-shadow: 0 0 5px #f005;
+}

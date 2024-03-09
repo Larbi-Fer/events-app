@@ -7,22 +7,24 @@ export const dateBetween = (first, last) => {
   last = new Date(last)
 
   const dateOptions = {
-    weekday: 'short', // abbreviated weekday name (e.g., 'Mon')
-    month: 'short', // abbreviated month name (e.g., 'Oct')
-    year: 'numeric', // numeric year (e.g., '2023')
-    day: 'numeric', // numeric day of the month (e.g., '25')
+    weekday: 'short',
+    month: 'short',
+    year: 'numeric',
+    day: 'numeric',
   }
 
   const timeOptions = {
-    hour: 'numeric', // numeric hour (e.g., '8')
-    minute: 'numeric', // numeric minute (e.g., '30')
-    hour12: true, // use 12-hour clock (true) or 24-hour clock (false)
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
   }
 
   if (first.toDateString() == last.toDateString()) {
     return first.toLocaleString('en-US', dateOptions) + ' | ' + first.toLocaleString('en-US', timeOptions) + ' → ' + last.toLocaleString('en-US', timeOptions) + ' ( ' + duration(moment(last).diff(first)) + ' )';
   }
 }
+
+export const fromNow = date => moment(date).fromNow()
 
 const duration = dur => {
   const res = moment.duration(dur, 'milliseconds')
