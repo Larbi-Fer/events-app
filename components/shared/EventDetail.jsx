@@ -9,21 +9,35 @@ import { dateBetween } from '@utils'
 import Link from 'next/link';
 import Button from '@components/ui/Button';
 import { fromNow } from '@/utils';
+import { setAttend } from '../../utils/api';
+import { useSession } from 'next-auth/react';
 
 const EventDetail = ({ id }) => {
   const [event, setEvent] = useState()
   const [dueDate, setDueDate] = useState()
+  const session = useSession();
 
   useEffect(() => {
     
-    return async() => {
-      const data = await getEvent(id)
+    const getData = async() => {
+      // session.update({ test: 123 })
+      const data = await getEvent(id, session.data?.user.id)
       if (!data.success) return
       document.title = data.event.title + ' | event'
       setDueDate(new Date(data.event.isDue ? data.event.dueDate : data.event.startDate))
+      console.log(data.event, session.data)
       setEvent(data.event)
     }
-  }, [])
+    if (session.status == 'loading') return
+    getData()
+  }, [session])
+
+  const handleAttend = async() => {
+    if (!session.data || new Date() > dueDate) return
+    const { data } = await setAttend(session.data.user.id, event.id);
+    console.log(data)
+    setEvent( old => ({...old, attend: old.attend + ( data.isAttend ? 1 : -1 ), user: {...old.user, isAttend: data.isAttend}}) )
+  }
 
   return (
     event ?
@@ -68,9 +82,13 @@ const EventDetail = ({ id }) => {
         </div>
         <div className="attend">
           <div className="button">
-            <Button disabled={new Date() > dueDate}>I WILL ATTEND</Button>
-            <span>0{event.isMax ? `/${event.max}` : ''} People will attend</span>
-            {/* <span>200/200 Tickets sold out</span> */}
+            <Button onClick={handleAttend} disabled={new Date() > dueDate || (event.isMax && event.attend >= event.max) || event.creator == session.data.user.id || !session.data}>
+              {event.user.isAttend ? 'CANCEL' : 'I WILL ATTEND'}
+            </Button>
+            <span className={event.isMax && event.attend >= event.max ? 'disabled' : null}>
+              {event.attend}{event.isMax ? `/${event.max}` : ''}
+              {(event.isMax ? '' : ' ') + (event.isMax && event.attend >= event.max ? 'Tickets sold out' :  'People will attend')}
+            </span>
           </div>
           <div className={"countdown" + (new Date() > dueDate ? ' disabled' : '')}>
             {fromNow(dueDate)}

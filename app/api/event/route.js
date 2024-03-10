@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 
 import CODES from '@utils/responses'
 import db from '@utils/database'
+import dbConnection from '@utils/db'
 
 // Create a new event
 export const POST = async req => {
@@ -41,8 +42,8 @@ export const POST = async req => {
 
 export const GET = async req => {
     try {
-        // const body = await req.json()
-        const id = req.nextUrl.searchParams.get('id')
+        const params = req.nextUrl.searchParams
+        const id = params.get('id'), userId = params.get('userId')
 
         const result = await new Promise((resolve, reject) => {
             db.query('SELECT events.*, users.username FROM events, users WHERE events.id=? AND events.creator = users.id', [id], (err, res) => {
@@ -52,7 +53,26 @@ export const GET = async req => {
         })
 
         if (!result.length) return NextResponse.json({ success: false, message: CODES.NOT_FOUND })
-        return NextResponse.json({ success: true, event: result[0] })
+        
+        const db2 = await dbConnection()
+
+        const query = userId == result[0].creator
+                                    ? 'SELECT userId, username, email, image, isAttend FROM attendees, users WHERE eventId = ? and isAttend=1 and userId = users.id'
+                                    : 'SELECT userId, isAttend FROM attendees WHERE eventId = ? and isAttend=1'
+        const [data] = await db2.execute(query, [id])
+        if (!userId) return NextResponse.json({ success: true, event: {...result[0], attend: data.length, user: { isAttend: 0 }} })
+
+
+        const user = data.find(v => v.userId == userId) ?? {}
+        if (!user.userId) user.isAttend = 0
+        /* const db2 = await dbConnection()
+        const [data] = await db2.execute('SELECT * FROM attend WHERE eventId = ? and userId = ?', [id, userId])
+
+        const user = {}
+        if (!data.length) user.isAttend = 0
+        else user.isAttend = data[0].isAttend */
+
+        return NextResponse.json({ success: true, event: {...result[0], attend: data.length, user, attendees: userId == result[0].creator ? data : null} })
     } catch (error) {
         console.log(error)
         return NextResponse.json({ success: false })

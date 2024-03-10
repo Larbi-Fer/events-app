@@ -12,4 +12,5 @@ const api = {
     delete: func('DELETE'),
 }
 
-export const getEvent = async id => await api.get(`/api/event?id=${id}`)
+export const getEvent = async (id, userId) => await api.get(`/api/event?id=${id}${userId ? "&userId=" + userId : ''}`)
+export const setAttend = async (userId, eventId) => await api.post(`/api/event/attend?userId=${userId}&eventId=${eventId}`)

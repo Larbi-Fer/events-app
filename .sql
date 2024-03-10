@@ -39,6 +39,16 @@ CREATE TABLE events (
     CONSTRAINT FOREIGN KEY(creator) REFERENCES users(id)
 )
 
+CREATE TABLE attendees (
+    userId INT,
+    eventId INT,
+    isAttend BOOLEAN,
+    isLike BOOLEAN,
+    UNIQUE (userId, eventId),
+    CONSTRAINT FOREIGN KEY(userId) REFERENCES users(id),
+    CONSTRAINT FOREIGN KEY(eventId) REFERENCES events(id)
+)
+
 -- Account activation
 DELIMITER $$
 CREATE PROCEDURE accActivate( uid INT )
