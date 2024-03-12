@@ -12,6 +12,7 @@ import { fromNow } from '@/utils';
 import { setAttend } from '../../utils/api';
 import { useSession } from 'next-auth/react';
 import AttendUsers from './AttendUsers';
+import Comments from './Comments';
 
 const EventDetail = ({ id }) => {
   const [event, setEvent] = useState()
@@ -82,24 +83,30 @@ const EventDetail = ({ id }) => {
 
         </div>
         {event.creator != session.data?.user.id ?
-          <div className="attend">
-            <div className="button">
-              <Button onClick={handleAttend} disabled={(new Date() > dueDate || (((event.isMax && event.attend >= event.max) || !session.data) && !event.user.isAttend))}>
-                {event.user.isAttend ? 'CANCEL' : 'I WILL ATTEND'}
-              </Button>
-              <span className={event.isMax && event.attend >= event.max ? 'disabled' : null}>
-                {event.attend}{event.isMax ? `/${event.max}` : ''}
-                {(event.isMax ? '' : ' ') + (event.isMax && event.attend >= event.max ? 'Tickets sold out' :  'People will attend')}
-              </span>
+          <>
+            <div className="attend">
+              <div className="button">
+                <Button onClick={handleAttend} disabled={(new Date() > dueDate || (((event.isMax && event.attend >= event.max) || !session.data) && !event.user.isAttend))}>
+                  {event.user.isAttend ? 'CANCEL' : 'I WILL ATTEND'}
+                </Button>
+                <span className={event.isMax && event.attend >= event.max ? 'disabled' : null}>
+                  {event.attend}{event.isMax ? `/${event.max}` : ''}
+                  {(event.isMax ? '' : ' ') + (event.isMax && event.attend >= event.max ? 'Tickets sold out' :  'People will attend')}
+                </span>
+              </div>
+              <div className={"countdown" + (new Date() > dueDate ? ' disabled' : '')}>
+                {fromNow(dueDate)}
+              </div>
             </div>
-            <div className={"countdown" + (new Date() > dueDate ? ' disabled' : '')}>
-              {fromNow(dueDate)}
-            </div>
-          </div>
+
+            <Comments eventId={event.id} eventCreatorId={event.creator} />
+          </>
           :
           <div className="c2 footer-section">
-              <AttendUsers users={event.attendees} num={event.attend} max={event.max} due={dueDate} />
-            <div style={{width: '100%'}}>Test</div>
+            <AttendUsers users={event.attendees} num={event.attend} max={event.max} due={dueDate} />
+            <div style={{width: '100%'}}>
+              <Comments eventId={event.id} eventCreatorId={event.creator} fullWidth />
+            </div>
           </div>
         }
 

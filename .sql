@@ -35,6 +35,7 @@ CREATE TABLE events (
     max INT,
     url VARCHAR(255),
     attendButton BOOLEAN,
+    isComments BOOLEAN DEFAULT false,
     UNIQUE (id, creator),
     CONSTRAINT FOREIGN KEY(creator) REFERENCES users(id)
 )
@@ -47,6 +48,18 @@ CREATE TABLE attendees (
     isLike BOOLEAN,
     UNIQUE (userId, eventId),
     CONSTRAINT FOREIGN KEY(userId) REFERENCES users(id),
+    CONSTRAINT FOREIGN KEY(eventId) REFERENCES events(id)
+)
+
+CREATE TABLE comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    authorId INT,
+    eventId INT,
+    `text` TEXT,
+    `date` DATETIME,,
+    reply INT,
+    CONSTRAINT FOREIGN KEY(reply) REFERENCES comments(id),
+    CONSTRAINT FOREIGN KEY(creator) REFERENCES users(id),
     CONSTRAINT FOREIGN KEY(eventId) REFERENCES events(id)
 )
 

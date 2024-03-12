@@ -1,0 +1,73 @@
+
+.comments {
+    width: 50%;
+    margin: 10px auto;
+    padding: 0 15px;
+}
+
+.comments .title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 0;
+    margin-bottom: 10px;
+}
+
+.comments .comment {
+    position: relative;
+    margin-left: 30px;
+    box-shadow: 0px 0px 5px #0005;
+    border-radius: 10px;
+    padding: 5px 10px;
+    margin-top: 10px;
+}
+
+.comments .comment .comment-header {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.comments .comment .image img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 0 10px;
+}
+
+.comments .comment .content {
+    margin-left: 50px;
+}
+
+.comments .comment .name {
+    font-weight: bold;
+}
+
+.comments .comment .name.author::after {
+    content: 'Author';
+    margin-left: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 0 15px;
+    background-color: var(--secondary-background);
+    border-radius: 20px;
+    color: var(--dark-bg3);
+}
+
+.comments .comment .date {
+    font-size: 14px;
+    color: #000c;
+}
+
+.comments .comment .replies {
+    margin-left: 30px;
+}
+
+.comments .comment.with-replies::before {
+    content: '';
+    position: absolute;
+    top: 55px;
+    left: 35px;
+    width: 1.5px;
+    height: calc(100% - 60px);
+    background-color: #0005;
+}

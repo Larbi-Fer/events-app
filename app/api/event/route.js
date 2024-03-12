@@ -27,6 +27,7 @@ export const POST = async req => {
 
         const [result] = await db.execute(qu, params)
         console.log(result)
+        db.end()
 
         return NextResponse.json({ success: true, id: result.insertId })
     } catch (error) {
@@ -44,7 +45,10 @@ export const GET = async req => {
 
         const [result] = await db.execute('SELECT events.*, users.username FROM events, users WHERE events.id=? AND events.creator = users.id', [id])
 
-        if (!result.length) return NextResponse.json({ success: false, message: CODES.NOT_FOUND })
+        if (!result.length) {
+            db.end()
+            return NextResponse.json({ success: false, message: CODES.NOT_FOUND })
+        }
 
 
         console.log(123)
@@ -53,13 +57,17 @@ export const GET = async req => {
                                     : 'SELECT userId, isAttend FROM attendees WHERE eventId = ? and isAttend=1'
         const [data] = await db.execute(query, [id])
         console.log(123)
-        if (!userId) return NextResponse.json({ success: true, event: {...result[0], attend: data.length, user: { isAttend: 0 }} })
+        if (!userId) {
+            db.end()
+            return NextResponse.json({ success: true, event: {...result[0], attend: data.length, user: { isAttend: 0 }} })
+        }
         console.log(123)
 
 
         const user = data.find(v => v.userId == userId) ?? {}
         if (!user.userId) user.isAttend = 0
 
+        db.end()
         return NextResponse.json({ success: true, event: {...result[0], attend: data.length, user, attendees: userId == result[0].creator ? data : null} })
     } catch (error) {
         console.log(error)
