@@ -121,3 +121,80 @@ body {
     color: #f00;
     text-shadow: 0 0 5px #f005;
 }
+
+.footer-section {
+    margin-top: 30px;
+}
+
+/* Users who will attend */
+
+.attend-users table, .attend-users th, .attend-users td {
+    border-collapse: collapse;
+    padding: 10px;
+    text-align: center;
+}
+
+.attend-users, .attend-users table {
+    width: 100%;
+}
+
+.attend-users section.table {
+    margin: 10px;
+    max-height: 500px;
+    overflow: auto;
+    border-radius: 10px;
+    background-color: #eee3;
+}
+
+.attend-users section::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.attend-users section::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #0004;
+    visibility: hidden;
+}
+
+.attend-users section:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+.attend-users thead tr th:first-child, .attend-users tbody tr td:first-child {
+    text-align: left;
+    padding-left: 20px;
+    font-weight: bold;
+}
+
+.attend-users thead th {
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+.attend-users tbody tr {
+    transition: all ease-out .2s;
+}
+.attend-users tbody tr:nth-child(even) {
+    background-color: var(--primary-bgo);
+}
+
+.attend-users tbody tr:hover {
+    background-color: var(--dark-bg1);
+}
+
+.attend-users tfoot th {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+}
+
+.attend-users thead th, .attend-users tfoot th {
+    background-color: var(--secondary-bgo);
+    backdrop-filter: blur(10px);
+}
+
+.attend-users tr td a {
+    text-decoration: none;
+}

@@ -42,6 +42,7 @@ CREATE TABLE events (
 CREATE TABLE attendees (
     userId INT,
     eventId INT,
+    orderDate DATETIME,
     isAttend BOOLEAN,
     isLike BOOLEAN,
     UNIQUE (userId, eventId),

@@ -2,22 +2,23 @@ import moment from 'moment';
 
 export const convertFileToUrl = (file = File) => URL.createObjectURL(file)
 
+const dateOptions = {
+  weekday: 'short',
+  month: 'short',
+  year: 'numeric',
+  day: 'numeric',
+}
+
+const timeOptions = {
+  hour: 'numeric',
+  minute: 'numeric',
+  hour12: true,
+}
+
 export const dateBetween = (first, last) => {
   first = new Date(first)
   last = new Date(last)
 
-  const dateOptions = {
-    weekday: 'short',
-    month: 'short',
-    year: 'numeric',
-    day: 'numeric',
-  }
-
-  const timeOptions = {
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true,
-  }
 
   if (first.toDateString() == last.toDateString()) {
     return first.toLocaleString('en-US', dateOptions) + ' | ' + first.toLocaleString('en-US', timeOptions) + ' → ' + last.toLocaleString('en-US', timeOptions) + ' ( ' + duration(moment(last).diff(first)) + ' )';
@@ -36,4 +37,8 @@ const duration = dur => {
   }
   else if (res.minutes()) s += res.minutes() + 'M'
   return s
+}
+
+export const convertToDate = (date) => {
+  return date.toLocaleString('en-US', dateOptions) + ' ' + date.toLocaleString('en-US', timeOptions)
 }

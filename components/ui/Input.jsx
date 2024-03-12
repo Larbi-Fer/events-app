@@ -16,7 +16,7 @@ const Input = ({ text, round, fullWidth, variant, onChange, multiLine, inpRef, r
     const change = e => {
         if(e.target.value == '') ref.current.classList.remove('selected')
         else ref.current.classList.add('selected')
-        onChange(e)
+        onChange && onChange(e)
     }
     
 
@@ -26,7 +26,7 @@ const Input = ({ text, round, fullWidth, variant, onChange, multiLine, inpRef, r
                 <textarea required={required} onChange={change} id={`id-${props.name}`}  ref={inpRef} {...props} /> :
                 <input type="text" {...props} required={required} onChange={change} id={`id-${props.name}`}  ref={inpRef} />
             }
-            <label for={`id-${props.name}`}>{text}</label>
+            <label htmlFor={`id-${props.name}`}>{text}</label>
         </div>
     )
 }

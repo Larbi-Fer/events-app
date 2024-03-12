@@ -32,7 +32,7 @@ const Navbar = () => {
         { session.data ?
             <>
               <input type="text" placeholder="Search ..." />
-              <Button round>Profile</Button>
+              <Button round>{session.data.user.username}</Button>
             </>
           :
             <>

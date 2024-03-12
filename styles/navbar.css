@@ -72,7 +72,7 @@ nav li, nav a, .buttons button {
     margin: 0 10px;
 }
 
-header .buttons input {
+header .buttons input, input.search {
     outline: none;
     padding: 5px 20px;
     border: none;
@@ -83,7 +83,11 @@ header .buttons input {
     transition: all .3s;
 }
 
-header .buttons input:hover, header .buttons input:focus {
+input.search {
+    margin-left: 0;
+}
+
+header .buttons input:hover, header .buttons input:focus, input.search:hover, input.search:focus {
     background-color: var(--dark-bg2);
 }
 

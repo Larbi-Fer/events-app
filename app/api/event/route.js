@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 
 import CODES from '@utils/responses'
-import db from '@utils/database'
 import dbConnection from '@utils/db'
 
 // Create a new event
@@ -24,13 +23,10 @@ export const POST = async req => {
         if (body.max.is) pushToQu('max', body.max.num)
 
         const qu = 'INSERT INTO events (' + keys.join(', ') + ') VALUES (' + keys.map((v, i) => '?') + ')'
+        const db = await dbConnection()
 
-        const result = await new Promise((resolve, reject) => {
-            db.query(qu, params, (err, res) => {
-                if (err) return reject(err)
-                resolve(res)
-            })
-        })
+        const [result] = await db.execute(qu, params)
+        console.log(result)
 
         return NextResponse.json({ success: true, id: result.insertId })
     } catch (error) {
@@ -44,33 +40,25 @@ export const GET = async req => {
     try {
         const params = req.nextUrl.searchParams
         const id = params.get('id'), userId = params.get('userId')
+        const db = await dbConnection()
 
-        const result = await new Promise((resolve, reject) => {
-            db.query('SELECT events.*, users.username FROM events, users WHERE events.id=? AND events.creator = users.id', [id], (err, res) => {
-                if (err) return reject(err)
-                resolve(res)
-            })
-        })
+        const [result] = await db.execute('SELECT events.*, users.username FROM events, users WHERE events.id=? AND events.creator = users.id', [id])
 
         if (!result.length) return NextResponse.json({ success: false, message: CODES.NOT_FOUND })
-        
-        const db2 = await dbConnection()
 
+
+        console.log(123)
         const query = userId == result[0].creator
-                                    ? 'SELECT userId, username, email, image, isAttend FROM attendees, users WHERE eventId = ? and isAttend=1 and userId = users.id'
+                                    ? 'SELECT userId, orderDate, username, email, image, isAttend FROM attendees, users WHERE eventId = ? and isAttend=1 and userId = users.id ORDER BY orderDate'
                                     : 'SELECT userId, isAttend FROM attendees WHERE eventId = ? and isAttend=1'
-        const [data] = await db2.execute(query, [id])
+        const [data] = await db.execute(query, [id])
+        console.log(123)
         if (!userId) return NextResponse.json({ success: true, event: {...result[0], attend: data.length, user: { isAttend: 0 }} })
+        console.log(123)
 
 
         const user = data.find(v => v.userId == userId) ?? {}
         if (!user.userId) user.isAttend = 0
-        /* const db2 = await dbConnection()
-        const [data] = await db2.execute('SELECT * FROM attend WHERE eventId = ? and userId = ?', [id, userId])
-
-        const user = {}
-        if (!data.length) user.isAttend = 0
-        else user.isAttend = data[0].isAttend */
 
         return NextResponse.json({ success: true, event: {...result[0], attend: data.length, user, attendees: userId == result[0].creator ? data : null} })
     } catch (error) {
