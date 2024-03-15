@@ -383,7 +383,7 @@ a {
     animation: befor-pop var(--delay), pop .5s var(--delay);
 }
 
-@keyframes pop {
+@keyframes befor-pop {
     0%, 100% {
         transform: scale(0);
     }
