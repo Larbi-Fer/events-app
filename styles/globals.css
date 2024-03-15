@@ -117,7 +117,7 @@ a {
     color: var(--secondary-bgo);
 }
 
-.inp input:hover, .inp input:focus, .inp textarea:hover, .inp textarea:focus {
+.inp:hover input, .inp input:focus, .inp:hover textarea, .inp textarea:focus {
     border-color: #000;
 }
 
@@ -127,6 +127,41 @@ a {
     left: 20px;
     transform: translateY(-50%);
     transition: .2s;
+}
+
+.inp .icon, .inp .icon-btn {
+    position: absolute;
+    top: calc(50% - 4px);
+    color: var(--secondary-bgo);
+}
+
+.inp .icon {
+    left: 10px;
+}
+
+.inp .icon-btn {
+    right: 10px;
+    transition: all .3s;
+    cursor: pointer;
+}
+
+.inp .icon-btn:hover {
+    color: var(--secondary-background);
+}
+
+.inp.loading {
+    overflow: hidden;
+    border-radius: 20px;
+}
+.inp.loading::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--secondary-background);
+    animation: loading-line 2s infinite;
 }
 
 .inp input:focus + label, .inp textarea:focus + label, .selected label{
@@ -140,7 +175,7 @@ a {
     background-color: var(--dark-bg3);
 }
 
-.inp.fill input:hover, .inp.fill textarea:hover, .inp.fill input:focus, .inp.fill textarea:focus {
+.inp.fill:hover input, .inp.fill:hover textarea, .inp.fill input:focus, .inp.fill textarea:focus {
     background-color: var(--dark-bg2);
 
 }
@@ -322,6 +357,65 @@ a {
     }
     100% {
         transform: translateX(0);
+    }
+}
+
+@keyframes loading-line {
+    0% {
+        left: -100%;
+    }
+    22%, 25% {
+        left: 0;
+    }
+    47%, 50% {
+        left: 100%;
+    }
+    72%, 75% {
+        left: 0;
+    }
+    97%, 100% {
+        left: -100%;
+    }
+}
+
+.zoom-up {
+    --delay: 0s;
+    animation: befor-pop var(--delay), pop .5s var(--delay);
+}
+
+@keyframes pop {
+    0%, 100% {
+        transform: scale(0);
+    }
+}
+@keyframes pop {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.rize {
+    --delay: 0s;
+    animation: befor-rise var(--delay), smooth .5s var(--delay);
+}
+
+@keyframes befor-rise {
+    0%, 100% {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+}
+@keyframes rize {
+    0% {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 100%;
     }
 }
 
