@@ -58,7 +58,7 @@ CREATE TABLE comments (
     `text` TEXT,
     `date` DATETIME,,
     reply INT,
-    CONSTRAINT FOREIGN KEY(reply) REFERENCES comments(id),
+    CONSTRAINT FOREIGN KEY(reply) REFERENCES comments(id) ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY(creator) REFERENCES users(id),
     CONSTRAINT FOREIGN KEY(eventId) REFERENCES events(id)
 )

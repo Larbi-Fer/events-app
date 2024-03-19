@@ -150,7 +150,7 @@ const EventForm = ({ type }) => {
       </div>
 
       <div className="c1" style={{ paddingTop: 25 }}>
-        <Button disabled={loading}>PUBLISH {loading ? '...' : ''}</Button>
+        <Button disabled={loading} className={loading ? 'loading' : ''}>PUBLISH</Button>
       </div>
 
       <Toast text={msg[0]} show={msg[0]!=''} after={() => setMsg(['', ''])} type={msg[1]} />
