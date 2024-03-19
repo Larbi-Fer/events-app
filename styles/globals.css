@@ -14,6 +14,9 @@
     --dark-bg1: #eee;
     --dark-bg2: #ccc;
     --dark-bg3: #ddd;
+
+    --danger-color: #f00;
+    --success-color: #0f1;
 }
 
 * {
@@ -33,6 +36,26 @@ a {
 
 .round {
     border-radius: 30px !important;
+}
+
+.danger-color { color: var(--danger-color); }
+
+.success-color { color: var(--success-color); }
+
+.danger-bg { background-color: var(--danger-color); }
+
+.success-bg { background-color: var(--success-color); }
+
+.danger-color-hover:hover { color: var(--danger-color); }
+
+.success-color-hover:hover { color: var(--success-color); }
+
+.danger-bg-hover:hover { background-color: var(--danger-color); }
+
+.success-bg-hover:hover { background-color: var(--success-color); }
+
+.without-bg {
+    background-color: transparent !important;
 }
 
 .btn {
@@ -58,28 +81,19 @@ a {
 
 .circle-button {
     position: relative;
-    width: 30px;
-    height: 30px;
+    width: 33px;
+    height: 33px;
     text-align: center;
-    margin: 10px;
     outline: none;
     border-radius: 50%;
     padding: 5px 5px;
     border: none;
-    background-color: #ccc;
-    overflow: hidden;
+    background-color: transparent;
     cursor: pointer;
 }
 
-.circle-button span.content {
-    z-index: 2;
-}
-
-.circle-button span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.circle-button:hover {
+    background-color: var(--secondary-bgo);
 }
 
 .circle-button span.background {
@@ -115,6 +129,7 @@ a {
 .inp input:disabled {
     background-color: var(--dark-bg3) !important;
     color: var(--secondary-bgo);
+    cursor: no-drop;
 }
 
 .inp:hover input, .inp input:focus, .inp:hover textarea, .inp textarea:focus {
@@ -183,7 +198,7 @@ a {
 /* Message box */
 
 .back-box {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -199,7 +214,7 @@ a {
 }
 
 .msg {
-    position: absolute;
+    position: fixed;
     background-color: #eee;
     border-radius: 10px;
     top: calc(50% + 10px);
@@ -273,6 +288,39 @@ a {
     margin-right: 10px;
 }
 
+.loading {
+    position: relative;
+    color: transparent !important;
+}
+
+.loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--secondary-bgo);
+    animation: loading-spinner-small 2s ease infinite;
+}
+
+.loading.black::before {
+    border-top-color: var(--primary-text) !important;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 0 10px;
+    object-fit: cover;
+}
+
 /* Drop zone */
 
 .drop-zone {
@@ -321,7 +369,7 @@ a {
 
 .check-item input[type="checkbox"] {
     position: absolute;
-    bottom: 12px;
+    bottom: 15px;
     left: 5px;
 }
 
@@ -335,28 +383,15 @@ a {
 
 /* Animations */
 
-.vibration {
-    animation: vib .5s ease;
-}
-
-@keyframes vib {
+@keyframes loading-spinner-small {
     0% {
-        transform: translateX(-10px);
-    }
-    20% {
-        transform: translateX(10px);
+        transform: rotate(0turn);
     }
     40% {
-        transform: translateX(-10px);
-    }
-    60% {
-        transform: translateX(10px);
-    }
-    80% {
-        transform: translateX(-10px);
+        transform: rotate(1turn);
     }
     100% {
-        transform: translateX(0);
+        transform: rotate(3turn);
     }
 }
 
@@ -375,47 +410,6 @@ a {
     }
     97%, 100% {
         left: -100%;
-    }
-}
-
-.zoom-up {
-    --delay: 0s;
-    animation: befor-pop var(--delay), pop .5s var(--delay);
-}
-
-@keyframes befor-pop {
-    0%, 100% {
-        transform: scale(0);
-    }
-}
-@keyframes pop {
-    0% {
-        transform: scale(0);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.rize {
-    --delay: 0s;
-    animation: befor-rise var(--delay), smooth .5s var(--delay);
-}
-
-@keyframes befor-rise {
-    0%, 100% {
-        transform: translateY(10px);
-        opacity: 0;
-    }
-}
-@keyframes rize {
-    0% {
-        transform: translateY(10px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 100%;
     }
 }
 

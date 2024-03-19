@@ -1,10 +1,10 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from "react"
+import React, { ButtonHTMLAttributes, useEffect, useRef, useState } from "react"
 import Button from "./Button"
 
 // buttons: { text, onClick, props }
-const Message = ({ show, onClose, title, children, width, buttons } = { width: String, show: String, onClose: () => null, title: String, children: React.Component }) => {
+const Message = ({ show, onClose, title, children, width, buttons } : { width: 'sm' | 'md' | 'lg' | 'xl', show: boolean, onClose: () => any, title: string, children?: React.ReactNode, buttons?: ({ text: string } & ButtonHTMLAttributes<HTMLButtonElement>)[] }) => {
     const boxRef = useRef()
     const msgRef = useRef()
     const allRef = useRef()
@@ -37,7 +37,7 @@ const Message = ({ show, onClose, title, children, width, buttons } = { width: S
                 </div>
                 <div className="footer">
                     { buttons?.map(btn => (
-                        <Button {...btn?.props} onClick={btn.onClick}>{btn.text}</Button>
+                        <Button {...btn} onClick={btn.onClick}>{btn.text}</Button>
                     )) }
                     <Button onClick={onClose}>CANCEL</Button>
                 </div>

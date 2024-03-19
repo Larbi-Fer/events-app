@@ -89,9 +89,9 @@ body {
     display: flex;
     align-items: center;
     padding: 5px 50px;
-    /* background: var(--dark-bg3); */
     background: var(--dark-bg3);
     border-top-left-radius: 40px;
+    z-index: 1000;
 }
 
 .attend::before {
@@ -160,6 +160,7 @@ body {
 .attend-users section:hover::-webkit-scrollbar-thumb {
     visibility: visible;
 }
+
 
 .attend-users thead tr th:first-child, .attend-users tbody tr td:first-child {
     text-align: left;
