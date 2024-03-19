@@ -16,6 +16,7 @@ export const GET = async req => {
                                             LEFT JOIN 
                                                 users AS u2 ON cm.authorId = u2.id
                                             WHERE comments.eventId = ? AND comments.reply IS NULL
+                                            ORDER BY comments.date DESC
                                             LIMIT ${CommentsLimit}`, [ eventId ])
 
 
@@ -46,6 +47,7 @@ export const GET = async req => {
                 id: comment.id_rep,
                 authorId: comment.authorId_rep,
                 author: comment.author_rep,
+                image: comment.image_rep,
                 date: comment.date_rep,
                 text: comment.text_rep,
             })
@@ -56,5 +58,37 @@ export const GET = async req => {
     } catch (error) {
         console.error(error)
         return NextResponse.json({ success: false, error }, {status: 500})
+    }
+}
+
+export const POST = async req => {
+    try {
+        const { authorId, eventId, text, reply } = await req.json()
+
+        const db = await dbConnection()
+
+        const [result] = await db.execute('INSERT INTO comments (authorId, eventId, text, date, reply) VALUES (?, ?, ?, ?, ?)', [authorId, eventId, text, new Date(), reply ?? null]);
+
+        db.end()
+        return NextResponse.json({ success: true, insertId: result.insertId })
+        
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json({ success: false, error})
+    }
+}
+
+export const DELETE = async req => {
+    try {
+        const { commentId } = await req.json()
+
+        const db = await dbConnection()
+        await db.execute('DELETE FROM comments WHERE id = ?', [commentId])
+        db.end()
+
+        return NextResponse.json({ success: true })
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json({ success: false, error })
     }
 }

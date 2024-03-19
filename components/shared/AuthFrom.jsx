@@ -61,7 +61,7 @@ const AuthFrom = () => {
 
   return (
     <>
-      <form className="auth-form" onSubmit={onSubmit}>
+      <form className="auth-form fade" onSubmit={onSubmit}>
         <h2>{ !isLogin ? 'Create account' : 'Login to continue' }</h2>
         <Input name='email' text='Email' type='email' fullWidth onChange={onChange} value={fields.email} variant='fill'/>
         {!isLogin && <Input name='username' text='Username' fullWidth onChange={onChange} value={fields.username} variant='fill'/>}

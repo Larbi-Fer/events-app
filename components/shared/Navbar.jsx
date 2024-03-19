@@ -17,27 +17,27 @@ const Navbar = () => {
   }
 
   return (
-    <header>
-      <h2 className="logo">Events</h2>
+    <header className="fade">
+      <h2 className="logo pan">Events</h2>
       <nav ref={ref}>
         { session.data ?
         <ul className="nav-links">
-          <li><Link href='/home'>Home</Link></li>
-          <li><Link href='/create'>Create New Event</Link></li>
-          <li><Link href='#'>My events</Link></li>
+          <li  className="pan"><Link href='/home'>Home</Link></li>
+          <li className="pan d1"><Link href='/create'>Create New Event</Link></li>
+          <li className="pan d2"><Link href='#'>My events</Link></li>
         </ul>
         : null}
       </nav>
       <div className="buttons">
         { session.data ?
             <>
-              <input type="text" placeholder="Search ..." />
-              <Button round>{session.data.user.username}</Button>
+              <input className="pan d3" type="text" placeholder="Search ..." />
+              <Button className="pan d4" round>{session.data.user.username}</Button>
             </>
           :
             <>
-              <Link href='/signup' className="cta"><Button round>GET STARTED</Button></Link>
-              <Link href='/login' className="cta"><Button round>LOGIN</Button></Link>
+              <Link href='/signup' className="cta pan"><Button round>GET STARTED</Button></Link>
+              <Link href='/login' className="cta pan d1"><Button round>LOGIN</Button></Link>
             </>
         }
         <div className="show-items" onClick={handleClick}>
