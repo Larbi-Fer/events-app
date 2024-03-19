@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "@styles/globals.css";
+import "@styles/animations.css";
 import "@styles/navbar.css";
 import Provider from "@components/shared/Provider";
 import Navbar from "@components/shared/Navbar";
