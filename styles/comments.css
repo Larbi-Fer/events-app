@@ -27,7 +27,6 @@
     border-radius: 10px;
     padding: 5px 10px;
     margin-top: 10px;
-    animation: zoom-up .5s;
 }
 
 .comments .comment .comment-header {
