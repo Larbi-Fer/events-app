@@ -3,7 +3,7 @@ import Credentials from 'next-auth/providers/credentials'
 
 import { compare } from 'bcrypt';
 
-import db from '@utils/database';
+import dbConnection from '@utils/db';
 import code from '@utils/responses';
 
 export const authOptions = {
@@ -16,41 +16,35 @@ export const authOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) throw new Error("Invalid email or password");
-
+        
         try {
-          const result = await new Promise((resolve, reject) => {
-            // Get the user
-            db.query(`SELECT * FROM users WHERE email=?`, [credentials.email], async(err, result) => {
-              if (err) return reject(err);
-
-              // Some conditions
-              if (!result.length) return reject(code.NOT_FOUND);
-              if (!(await compare(credentials.password, result[0].password))) return reject(code.WRONG);
-              if (!result[0].active) return reject(code.NOT_ACTIVE);
-              // OK
-              return resolve(result[0])
-            })
-          })
-          return result;
+          // Get the user
+          const db = await dbConnection()
+          const [result] = await db.query(`SELECT * FROM users WHERE email=?`, [credentials.email])
+          db.end()
+          // Some conditions
+          if (!result.length) throw new Error(code.NOT_FOUND);
+          if (!(await compare(credentials.password, result[0].password))) throw new Error(code.WRONG);
+          if (!result[0].active) throw new Error(code.NOT_ACTIVE);
+          
+          // OK
+          return result[0];
         } catch (error) {
-          throw new Error(error)
+          throw new Error(error.message)
         }
       }
     })
   ],
   callbacks: {
-    async session({ session }) {
+    async session({ session, tok }) {
       // store the user id from DataBase to session
-      const result = await new Promise((resolve, reject) => {
-        db.query('SELECT id, email, username, image FROM users WHERE email = ?', [session.user.email], (err, result) => {
-          if (err) return reject(err);
-          resolve(result[0]);
-        })
-      })
+      const db = await dbConnection()
+      const [result] = await db.execute('SELECT id, email, username, image FROM users WHERE email = ?', [session.user.email])
 
-      if (!result) return false;
+      if (!result.length) return false;
 
-      session.user = result
+      session.user = result[0]
+      db.end()
       return session;
     },
   }
