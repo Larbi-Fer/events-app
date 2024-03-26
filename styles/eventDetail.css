@@ -127,6 +127,11 @@ body {
 }
 
 /* Users who will attend */
+.attend-users {
+    position: sticky;
+    top: 60px;
+    height: max-content;
+}
 
 .attend-users table, .attend-users th, .attend-users td {
     border-collapse: collapse;
