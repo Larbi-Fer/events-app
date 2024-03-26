@@ -383,6 +383,23 @@ a {
     left: 28px;
 }
 
+/* Empty */
+.empty {
+    height: 355px;
+    display: block;
+    text-align: center;
+}
+
+.empty .title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.empty .empty-text {
+    font-size: 15px;
+    color: #0009;
+}
+
 /* Event card */
 .event-card {
     position: relative;
@@ -485,22 +502,6 @@ a {
 
 .collection .events > div {
     margin: 5px;
-}
-
-.collection .empty {
-    height: 355px;
-    display: block;
-    text-align: center;
-}
-
-.collection .empty .title {
-    font-size: 25px;
-    font-weight: bold;
-}
-
-.collection .empty .empty-text {
-    font-size: 15px;
-    color: #0009;
 }
 
 .collection.loading .empty .empty-text {

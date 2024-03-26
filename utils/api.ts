@@ -1,3 +1,5 @@
+import { CollectionProps } from "@components/shared/Collection"
+
 type URLProps = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE'
 
 const func = (type: URLProps) => async(url: string, data?: any) => await (await fetch(url, {
@@ -6,7 +8,7 @@ const func = (type: URLProps) => async(url: string, data?: any) => await (await 
   headers: { 'Content-Type': 'application/json' }
 }))?.json()
 
-const api = {
+export const api = {
     get: func('GET'),
     post: func('POST'),
     patch: func('PATCH'),
@@ -21,3 +23,8 @@ export const searchAttendees = async (eventId: number, q: string) => await api.g
 export const getComments = async (eventId: number, limit: [number, number]) => await api.get(`/api/event/comments?eventId=${eventId}&min=${limit[0]}&max=${limit[1]}`)
 export const insertComment = async (data: { authorId: number, eventId: number, text: string, reply?: number }) => await api.post('/api/event/comments', data)
 export const deleteComment = async (commentId: number) => await api.delete('/api/event/comments', { commentId })
+
+export const getEventsData = async (type: 'My_Tickets' | 'Organized_Events', id: number | string, email: string) => await api.get(`/api/profile/${id}?type=${type}&userEmail=${email}`)
+
+export const follow = async (follower: number, followed: number) => await api.post(`/api/profile/follow`, { follower, followed })
+export const getFollow = async (type: 'followers' | 'following', id: number) => await api.get(`/api/profile/follow/${id}?type=${type}`)
