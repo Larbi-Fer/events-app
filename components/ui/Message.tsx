@@ -3,11 +3,22 @@
 import React, { ButtonHTMLAttributes, useEffect, useRef, useState } from "react"
 import Button from "./Button"
 
+type MessageProps = {
+    show: boolean
+    onClose: () => void
+    title: string
+    children: React.ReactNode
+    width: 'sm' | 'md' | 'lg'
+    buttons?: ({ text: string } & ButtonHTMLAttributes<HTMLButtonElement>)[]
+    withoutCancelButton?: boolean
+
+}
+
 // buttons: { text, onClick, props }
-const Message = ({ show, onClose, title, children, width, buttons } : { width: 'sm' | 'md' | 'lg' | 'xl', show: boolean, onClose: () => any, title: string, children?: React.ReactNode, buttons?: ({ text: string } & ButtonHTMLAttributes<HTMLButtonElement>)[] }) => {
-    const boxRef = useRef()
-    const msgRef = useRef()
-    const allRef = useRef()
+const Message = ({ show, onClose, title, children, width, buttons, withoutCancelButton } : MessageProps) => {
+    const boxRef = useRef<HTMLDivElement>()
+    const msgRef = useRef<HTMLDivElement>()
+    const allRef = useRef<HTMLDivElement>()
 
     useEffect(() => {
         if(show) {
@@ -35,12 +46,12 @@ const Message = ({ show, onClose, title, children, width, buttons } : { width: '
                 <div className="content">
                     {children}
                 </div>
-                <div className="footer">
+                {!withoutCancelButton && <div className="footer">
                     { buttons?.map(btn => (
                         <Button {...btn} onClick={btn.onClick}>{btn.text}</Button>
                     )) }
                     <Button onClick={onClose}>CANCEL</Button>
-                </div>
+                </div>}
             </div>
         </div>
     )
