@@ -31,7 +31,7 @@ const EventDetail = ({ id }) => {
       console.log(data.event, session.data)
       setEvent(data.event)
     }
-    if (session.status == 'loading') return
+    if (session.status == 'loading' || event) return
     getData()
   }, [session])
 

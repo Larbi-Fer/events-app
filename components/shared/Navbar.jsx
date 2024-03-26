@@ -24,7 +24,7 @@ const Navbar = () => {
         <ul className="nav-links">
           <li  className="pan"><Link href='/home'>Home</Link></li>
           <li className="pan d1"><Link href='/create'>Create New Event</Link></li>
-          <li className="pan d2"><Link href='#'>My events</Link></li>
+          <li className="pan d2"><Link href={'/profile/' + session.data?.user.id}>My Profile</Link></li>
         </ul>
         : null}
       </nav>

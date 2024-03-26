@@ -51,17 +51,14 @@ export const GET = async req => {
         }
 
 
-        console.log(123)
         const query = userId == result[0].creator
                                     ? 'SELECT userId, orderDate, username, email, image, isAttend FROM attendees, users WHERE eventId = ? and isAttend=1 and userId = users.id ORDER BY orderDate'
                                     : 'SELECT userId, isAttend FROM attendees WHERE eventId = ? and isAttend=1'
         const [data] = await db.execute(query, [id])
-        console.log(123)
         if (!userId) {
             db.end()
             return NextResponse.json({ success: true, event: {...result[0], attend: data.length, user: { isAttend: 0 }} })
         }
-        console.log(123)
 
 
         const user = data.find(v => v.userId == userId) ?? {}

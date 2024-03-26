@@ -17,7 +17,7 @@ const Collection = ({ events, emptyText, loading, isAttend, editable }: Collecti
         {
           !events || events?.length === 0 ?
             // if no events or events length is 0
-            <div className="empty">
+            <div className="empty fade">
               {!loading && <img src="/icons/empty.png" alt="empty" />}
               <div className="title">No event</div>
               <div className="empty-text">{emptyText}</div>

@@ -38,7 +38,7 @@ CREATE TABLE events (
     isComments BOOLEAN DEFAULT false,
     UNIQUE (id, creator),
     CONSTRAINT FOREIGN KEY(creator) REFERENCES users(id)
-)
+);
 
 CREATE TABLE attendees (
     userId INT,
@@ -49,7 +49,7 @@ CREATE TABLE attendees (
     UNIQUE (userId, eventId),
     CONSTRAINT FOREIGN KEY(userId) REFERENCES users(id),
     CONSTRAINT FOREIGN KEY(eventId) REFERENCES events(id)
-)
+);
 
 CREATE TABLE comments (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -61,7 +61,16 @@ CREATE TABLE comments (
     CONSTRAINT FOREIGN KEY(reply) REFERENCES comments(id) ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY(creator) REFERENCES users(id),
     CONSTRAINT FOREIGN KEY(eventId) REFERENCES events(id)
-)
+);
+
+CREATE TABLE followers (
+    follower INT,
+    followed INT,
+    isFollow BOOLEAN,
+    PRIMARY KEY (follower, followed),
+    CONSTRAINT FOREIGN KEY(follower) REFERENCES users(id),
+    CONSTRAINT FOREIGN KEY(followed) REFERENCES users(id)
+);
 
 -- Account activation
 DELIMITER $$

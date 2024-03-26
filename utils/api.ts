@@ -1,5 +1,3 @@
-import { CollectionProps } from "@components/shared/Collection"
-
 type URLProps = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE'
 
 const func = (type: URLProps) => async(url: string, data?: any) => await (await fetch(url, {
