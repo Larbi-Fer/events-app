@@ -5,6 +5,8 @@
     --primary-background-disable: #b54b17;
     --secondary-background-disable: #0056a2;
 
+    --bg: #fff;
+
     --primary-bgo: #eee5;
     --secondary-bgo: #1113;
 
@@ -209,7 +211,7 @@ a {
 }
 
 .back-box.blur {
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(5px);
     background-color: #2224;
 }
 
@@ -381,6 +383,175 @@ a {
     left: 28px;
 }
 
+/* Event card */
+.event-card {
+    position: relative;
+    width: 20%;
+    min-width: 300px;
+    background-color: var(--primary-bgo);
+    box-shadow: 0 0 5px #0002;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all .3s;
+}
+
+.event-card:hover {
+    box-shadow: 0 0 5px #0005;
+    transform: translateY(-3px);
+}
+
+.event-card .tools {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: var(--secondary-bgo);
+    background-color: var(--primary-bgo);
+    border-radius: 20px;
+    padding: 5px 0;
+    opacity: 0;
+    transition: all .3s;
+}
+
+.event-card:hover .tools {
+    opacity: 100%;
+}
+
+.event-card .tools > div {
+    cursor: pointer;
+    transition: all .2s linear;
+}
+
+.event-card .tools div.edit {
+    border-bottom: 1px solid #0003;
+}
+.event-card .tools div.edit:hover {
+    color: var(--secondary-background);
+}
+
+.event-card .tools div.delete:hover {
+    color: var(--danger-color);
+}
+
+.event-card .image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.event-card .image img:active {
+    object-fit: contain;
+}
+
+.event-card .content {
+    text-decoration: none;
+}
+
+.event-card .content > div {
+    padding: 10px;
+    height: 150px;
+    position: relative;
+}
+
+.event-card .content > div .date {
+    font-size: small;
+    color: #0009;
+}
+
+.event-card .content > div .desc {
+    margin-top: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.event-card .content > div .bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 0 15px;
+    width: 100%;
+    color: #0009;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Collection */
+.collection .events {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+}
+
+.collection .events > div {
+    margin: 5px;
+}
+
+.collection .empty {
+    height: 355px;
+    display: block;
+    text-align: center;
+}
+
+.collection .empty .title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.collection .empty .empty-text {
+    font-size: 15px;
+    color: #0009;
+}
+
+.collection.loading .empty .empty-text {
+    color: transparent;
+}
+
+.time {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    border-radius: 30px;
+    overflow: hidden;
+    width: max-content;
+    margin: auto;
+    position: sticky;
+    top: 65px;
+    z-index: 3;
+}
+.time div {
+    background-color: var(--dark-bg3);
+    padding: 5px;
+    width: 200px;
+    text-align: center;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.time div:hover {
+    background-color: var(--dark-bg2);
+}
+
+.time div:first-child {
+    border-right: 1px solid var(--secondary-bgo);
+}
+
+.time span {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--secondary-background);
+    transition: .3s;
+}
+
+.time div.first.selected + span {
+    left: 0;
+}
+
+.time div.last.selected + span {
+    right: 0;
+}
 /* Animations */
 
 @keyframes loading-spinner-small {
