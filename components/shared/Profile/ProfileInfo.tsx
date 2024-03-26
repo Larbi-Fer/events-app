@@ -112,32 +112,4 @@ const ProfileInfo = ({ user: userPass }) => {
   )
 }
 
-/* 
-  <table className="follow-data">
-    <tbody>
-      { followUsers && user[followUsers] == undefined &&
-        <div className="follow-info loading" style={{height: '100px', width: '100%'}}></div>}
-      { (user[followUsers] != undefined && !user[followUsers].length ) &&
-        <div className="follow-info no-one" style={{height: '100px'}}>
-          <div className="title">No {followUsers}</div>  
-        </div>}
-      {followUsers && user[followUsers]?.map(f => (
-        <tr key={f[followUsers == 'followers' ? 'follower' : 'followed']} className="follow-info">
-            <td className="avatar">
-              <Link href={`/profile/${f[followUsers == 'followers' ? 'follower' : 'followed']}`} passHref>
-                <img src={f.image} alt="avatar" className='icon' />
-              </Link>
-            </td>
-            <td>
-              <Link href={`/profile/${f[followUsers == 'followers' ? 'follower' : 'followed']}`} passHref>
-                <div className="name">{f.username}</div>
-                <div className="email">{f.email}</div>
-              </Link>
-            </td>
-          </tr>
-      ))}
-    </tbody>
-  </table>
-*/
-
 export default ProfileInfo
