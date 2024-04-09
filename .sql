@@ -72,6 +72,19 @@ CREATE TABLE followers (
     CONSTRAINT FOREIGN KEY(followed) REFERENCES users(id)
 );
 
+CREATE TABLE notifications (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    userID INT,
+    relatedUser INT,
+    message TEXT,
+    redirectUrl VARCHAR(255),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    isRead BOOLEAN DEFAULT FALSE,
+    isOpen BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (userID) REFERENCES users(id)
+    FOREIGN KEY (relatedUser) REFERENCES users(id)
+);
+
 -- Account activation
 DELIMITER $$
 CREATE PROCEDURE accActivate( uid INT )
