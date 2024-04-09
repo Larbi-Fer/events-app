@@ -26,3 +26,8 @@ export const getEventsData = async (type: 'My_Tickets' | 'Organized_Events', id:
 
 export const follow = async (follower: number, followed: number) => await api.post(`/api/profile/follow`, { follower, followed })
 export const getFollow = async (type: 'followers' | 'following', id: number) => await api.get(`/api/profile/follow/${id}?type=${type}`)
+
+export const getNotifications = async (id: number) => await api.get(`/api/profile/${id}/notifications`)
+export const getNumOfNotifications = async (id: number) => await api.get(`/api/profile/${id}/notifications/num`)
+export const readNotifications = async (id: number) => await api.post(`/api/profile/${id}/notifications`)
+export const openANotification = async (id: number, notificationId: number) => await api.patch(`/api/profile/${id}/notifications`, { notificationId })
