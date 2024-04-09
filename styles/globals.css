@@ -19,6 +19,8 @@
 
     --danger-color: #f00;
     --success-color: #0f1;
+
+    --back-box-z-index: 1000;
 }
 
 * {
@@ -207,7 +209,7 @@ a {
     height: 100%;
     background-color: transparent;
     transition: .4s;
-    z-index: 1000;
+    z-index: var(--back-box-z-index);
 }
 
 .back-box.blur {

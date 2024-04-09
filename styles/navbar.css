@@ -110,6 +110,99 @@ header .show-items span {
     background-color: #000;
 }
 
+/* Notifications */
+
+.notifications-button {
+    display: flex;
+    cursor: pointer;
+    position: relative;
+}
+
+.notifications-button.num::before {
+    content: attr(num);
+    position: absolute;
+    top: -5px;
+    right: 0;
+    background-color: #e22;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.notifications {
+    position: absolute;
+    top: 65px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: var(--dark-bg3);
+    display: none;
+    z-index: calc(var(--back-box-z-index) + 1);
+}
+
+.notifications.active {
+    display: block;
+    animation: show-notif .3s ease 0s;
+}
+
+.notifications.inactive {
+    display: none;
+    animation: hide-notif .3s ease 0s;
+}
+
+.notifications .notif {
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    transition: all .3s ease-in-out;
+    position: relative;
+    margin-top: 5px;
+}
+
+.notifications .notif:hover {
+    background-color: var(--dark-bg2);
+}
+
+.notifications .notif.new {
+    background-color: var(--dark-bg2);
+}
+
+.notifications .notif.new::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 5px;
+    height: 5px;
+    background-color: var(--secondary-background);
+    border-radius: 50%;
+}
+
+@keyframes show-notif {
+    0% {
+        display: block;
+        transform: scale(0.7);
+        opacity: 0%;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 100%;
+    }   
+}
+
+@keyframes hide-notif {
+    0% {
+        display: block;
+        transform: scale(1);
+        opacity: 100%;
+    }
+    100% {
+        transform: scale(0.7);
+        opacity: 0%;
+    }   
+}
 
 @media screen and (max-width: 750px) {
     header .show-items {
