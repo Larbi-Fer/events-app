@@ -73,6 +73,15 @@ const Notifications = ({ id, show, close } : { id: number, show: boolean, close:
             </div>
           </Link>
         ))}
+        {notif == null && <div className="loading black" style={{width: '400px', height: '100px'}}></div>}
+        {(notif && notif.length == 0) &&
+          <div className="empty-notif">
+            <img src="/icons/no_notification.png" alt="No notification" />
+            <h2>You don't have any notification right now</h2>
+            <p>When someone you follow adds an event<br />
+              it will appear here</p>
+          </div>
+        }
       </div>
     </div>
   )

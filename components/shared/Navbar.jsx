@@ -1,14 +1,17 @@
 'use client'
 
-import { useSession } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import { useEffect, useRef, useState } from "react"
 
 import Link from "next/link"
 
 import Button from "@components/ui/Button"
 import Notifications from "@components/shared/Notifications"
-import NotificationsIcon from "@mui/icons-material/Notifications"
+import Search from "./Search"
+
 import { getNumOfNotifications, readNotifications } from "@utils/api"
+
+import NotificationsIcon from "@mui/icons-material/Notifications"
 
 const Navbar = () => {
   const session = useSession()
@@ -59,8 +62,8 @@ const Navbar = () => {
         <div className="buttons">
           { session.data ?
               <>
-                <input className="pan d3" type="text" placeholder="Search ..." />
-                <Button className="pan d4" round>{session.data.user.username}</Button>
+                <Search />
+                <Button className="pan d4" round onClick={async() => await signOut()}>{session.data.user.username}</Button>
               </>
             :
               <>

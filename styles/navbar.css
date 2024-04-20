@@ -132,13 +132,15 @@ header .show-items span {
 }
 
 .notifications {
-    position: absolute;
+    position: fixed;
     top: 65px;
     right: 10px;
     padding: 5px 10px;
     border-radius: 10px;
-    background-color: var(--dark-bg3);
+    background-color: #ddd9;
+    backdrop-filter: blur(8px);
     display: none;
+    box-shadow: 0 0 10px #0005;
     z-index: calc(var(--back-box-z-index) + 1);
 }
 
@@ -162,11 +164,11 @@ header .show-items span {
 }
 
 .notifications .notif:hover {
-    background-color: var(--dark-bg2);
+    background-color: #ddd6;
 }
 
 .notifications .notif.new {
-    background-color: var(--dark-bg2);
+    background-color: #ddd6;
 }
 
 .notifications .notif.new::before {
@@ -178,6 +180,17 @@ header .show-items span {
     height: 5px;
     background-color: var(--secondary-background);
     border-radius: 50%;
+}
+
+.empty-notif img {
+    display: block;
+    margin: 5px auto;
+}
+
+.empty-notif h2, .empty-notif p {
+    padding: 5px 10px;
+    color: #333e;
+    text-align: center;
 }
 
 @keyframes show-notif {

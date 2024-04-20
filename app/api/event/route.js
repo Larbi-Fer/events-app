@@ -24,9 +24,16 @@ export const POST = async req => {
 
         const qu = 'INSERT INTO events (' + keys.join(', ') + ') VALUES (' + keys.map((v, i) => '?') + ')'
         const db = await dbConnection()
-
+        
         const [result] = await db.execute(qu, params)
-        console.log(result)
+        
+        // Send a notification to users
+        const [users] = await db.execute('SELECT follower FROM followers WHERE followed = ? AND isFollow = true', [body.creator]);
+        const [[creator]] = await db.execute('SELECT * FROM users WHERE id = ?', [body.creator]);
+        const rows = users.map(user => `(${user.follower}, ${body.creator}, '${creator.username} created a new event - ${body.title}', '/event/${result.insertId}')`).join(', ')
+        
+        await db.execute('INSERT INTO notifications(userId, relatedUser, message, redirectUrl) VALUES ' + rows)
+    
         db.end()
 
         return NextResponse.json({ success: true, id: result.insertId })
