@@ -1,14 +1,11 @@
-'use client'
-
 import Button from "@components/ui/Button"
 import { signOut, useSession } from "next-auth/react"
+import EventsList from "@components/shared/home/EventsList"
 
-const Home = () => {
-  const session = useSession()
+const Home = ({ searchParams }) => {
   return (
     <div>
-      <Button onClick={async() => await signOut()}>Home</Button>
-      <Button onClick={() => console.log(session)}>session</Button>
+      <EventsList q={searchParams.q} tag={searchParams.tag} />
     </div>
   )
 }

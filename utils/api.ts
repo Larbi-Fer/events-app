@@ -17,6 +17,7 @@ export const api = {
 export const getEvent = async (id: number, userId: number) => await api.get(`/api/event?id=${id}${userId ? "&userId=" + userId : ''}`)
 export const setAttend = async (userId: number, eventId: number) => await api.post(`/api/event/attend/${eventId}`, { userId })
 export const searchAttendees = async (eventId: number, q: string) => await api.get(`/api/event/attend/${eventId}?q=${q}`)
+export const getEventsForHome = async (q?: string, tag?: string, start = 0) => await api.get(`/api/events?start=${start}&${q ? 'q' : (tag ? 'tag' : '')}=${q || tag || ''}`)
 
 export const getComments = async (eventId: number, limit: [number, number]) => await api.get(`/api/event/comments?eventId=${eventId}&min=${limit[0]}&max=${limit[1]}`)
 export const insertComment = async (data: { authorId: number, eventId: number, text: string, reply?: number }) => await api.post('/api/event/comments', data)
