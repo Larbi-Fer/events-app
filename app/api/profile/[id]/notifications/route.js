@@ -6,7 +6,7 @@ export const GET = async(req, { params: { id } }) => {
     try {        
         // GET notifications details
         const db = await dbConnection()
-        const [notifications] = await db.execute('SELECT notifications.*, image AS logo FROM notifications, users WHERE userId = ? and users.id = relatedUser LIMIT 10', [id])
+        const [notifications] = await db.execute('SELECT notifications.*, image AS logo FROM notifications, users WHERE userId = ? and users.id = relatedUser ORDER BY createdAt DESC LIMIT 10', [id])
         db.end()
 
         return NextResponse.json({ success: true, notifications})
