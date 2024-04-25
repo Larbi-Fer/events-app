@@ -1,14 +1,15 @@
 'use client'
 
 import { useSession } from "next-auth/react"
-import { useState } from "react"
+import { useRef, useState } from "react"
 
 import Link from "next/link"
 
 import Button from "@components/ui/Button"
 import Message from "@components/ui/Message"
 
-import { follow, getFollow } from "@utils/api"
+import { follow, getFollow, updateUsername } from "@utils/api"
+import { TitlePrefix } from "@utils/const"
 
 const ProfileInfo = ({ user: userPass }) => {
   const session = useSession()
@@ -16,6 +17,9 @@ const ProfileInfo = ({ user: userPass }) => {
   const [user, setUser] = useState(userPass)
   const [followUsers, setFollowUsers] = useState<'followers' | 'following' | null>()
   const [msg, setMsg] = useState(false)
+
+  const [editUser, setEditUser] = useState(false)
+  const editRef = useRef<HTMLInputElement>()
 
   const handleFollow = async () => {
     setLoad(true)
@@ -40,6 +44,27 @@ const ProfileInfo = ({ user: userPass }) => {
     setUser(prev => ({...prev, [type]: res[type]}))
   }
 
+  const turnUsernameEditable = () => {
+    if (user.id != session.data.user.id) return
+    setEditUser(true)
+    setTimeout(() => editRef.current.focus(), 100)
+  }
+
+  const editUsername = async (e) => {
+    console.log(123);
+    
+    e.preventDefault()
+    setEditUser(false)
+    const username = editRef.current.value
+    if (username == user.username) return
+
+    // Send the new username to the server
+    await updateUsername(user.id, username);
+    // Update the user's username
+    setUser(prev => ({...prev, username}))
+    document.title = username + TitlePrefix
+  }
+
   return (
     <>
       <div className="info">
@@ -47,7 +72,13 @@ const ProfileInfo = ({ user: userPass }) => {
           <img src={user.image} alt="avatar" className='icon' />
         </div>
         <div>
-          <div className="name">{user.username}</div>
+          {!editUser
+            ? <div className="name" onDoubleClick={turnUsernameEditable}>{user.username}</div>
+            :
+            <form onSubmit={editUsername}>
+              <input ref={editRef} defaultValue={user.username} onBlur={() => setEditUser(false)} style={{textAlign: 'center', background: 'transparent', outline: 'none', border: 'none'}} />
+            </form> 
+          }
           <div className="email">{user.email}</div>
         </div>
         <div className="button-container">
