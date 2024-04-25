@@ -11,7 +11,7 @@ CREATE TABLE users(
     active BOOLEAN
 );
 
-CREATE TABLE users(
+CREATE TABLE verify(
     id INT PRIMARY KEY,
     code INT,
     expires DATETIME,
