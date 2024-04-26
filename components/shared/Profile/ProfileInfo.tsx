@@ -8,8 +8,10 @@ import Link from "next/link"
 import Button from "@components/ui/Button"
 import Message from "@components/ui/Message"
 
-import { follow, getFollow, updateUsername } from "@utils/api"
+import { follow, getFollow, updateIcon, updateUsername } from "@utils/api"
 import { TitlePrefix } from "@utils/const"
+import IconUploader from "@components/ui/IconUploader"
+import { useUploadThing } from "@utils/uploadthing"
 
 const ProfileInfo = ({ user: userPass }) => {
   const session = useSession()
@@ -20,6 +22,11 @@ const ProfileInfo = ({ user: userPass }) => {
 
   const [editUser, setEditUser] = useState(false)
   const editRef = useRef<HTMLInputElement>()
+  const [editIcon, setEditIcon] = useState<[boolean, string]>([false, null])
+  const [files, setFiles] = useState([])
+  const { startUpload } = useUploadThing("imageUploader")
+
+  const [loading, setLoading] = useState<'icon' | 'username' | null >(null)
 
   const handleFollow = async () => {
     setLoad(true)
@@ -65,11 +72,41 @@ const ProfileInfo = ({ user: userPass }) => {
     document.title = username + TitlePrefix
   }
 
+  const editProfileIcon = async() => {
+    if(loading) return
+    setLoading('icon')
+
+    let newUrl:string;
+    // Upload the image
+    if(files.length > 0) {
+      const uploadedImages = await startUpload(files)
+
+      if(!uploadedImages) {
+        return
+      }
+      newUrl = uploadedImages[0].url
+    }
+    // Update data in database
+    await updateIcon(user.id, newUrl)
+    setEditIcon([false, null])
+    setUser(prev => ({...prev, image: newUrl}))
+    setLoading(null)
+  }
+
   return (
     <>
       <div className="info">
         <div className="avatar">
-          <img src={user.image} alt="avatar" className='icon' />
+          {editIcon[0]
+            ?
+              <>
+                <IconUploader text='Cover' setFiles={setFiles} imageUrl={editIcon[1]} onFieldChange={url => setEditIcon(prev => [prev[0], url])} />
+                <div className="group">
+                  <Button disabled={!files.length || loading == 'icon'} variant="secondary" round onClick={editProfileIcon} className={loading == 'icon' ? 'loading' : ''}>Save</Button>
+                  <Button round onClick={() => setEditIcon(prev => [false, prev[1]])}>Cancel</Button>
+                </div>
+              </>
+            : <img src={user.image} alt="avatar" className='icon' onDoubleClick={() => user.id == session.data.user.id && setEditIcon(prev => [true, prev[1]])} />}
         </div>
         <div>
           {!editUser

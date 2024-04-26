@@ -7,7 +7,7 @@ import { generateClientDropzoneAccept } from "uploadthing/client";
 import { convertFileToUrl } from '@utils'
 import Button from "./Button";
 
-function FileUploader({ imageUrl, onFieldChange, setFiles, text } = { imageUrl: '', onFieldChange: (url='') => null, text: '' }) {
+function IconUploader({ imageUrl, onFieldChange, setFiles, text } = { imageUrl: '', onFieldChange: (url='') => null, text: '' }) {
   // console.log(generateClientDropzoneAccept())
   const onDrop = useCallback((acceptedFiles) => {
     setFiles(acceptedFiles);
@@ -21,19 +21,17 @@ function FileUploader({ imageUrl, onFieldChange, setFiles, text } = { imageUrl: 
   }); 
  
   return (
-    <div {...getRootProps()} className="fullWidth drop-zone">
-      <label>{text}</label>
+    <div {...getRootProps()} className="drop-zone icon" style={{margin: 'auto', overflow: 'hidden'}}>
       <div>
         <input {...getInputProps()} />
         {imageUrl ? (
           <div>
             <img src={imageUrl} alt="Image" />
-            <Button round onClick={() => setFiles([]) || onFieldChange('')}>Delete</Button>
           </div>
-        ) : <div> Drop files here! </div>}
+        ) : <div> Drop your icon here! </div>}
       </div>
     </div>
   );
 }
 
-export default FileUploader
+export default IconUploader

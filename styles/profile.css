@@ -105,3 +105,14 @@
     justify-content: center;
     width: 100%;
 }
+
+.group {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 5px;
+}
+
+.group button {
+    width: 45%;
+    font-size: 12px;
+}
