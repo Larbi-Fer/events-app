@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 import Link from 'next/link';
@@ -25,11 +25,15 @@ const ProfileCollection = ({ events, title, buttonText, emptyText, type, buttonH
   const { id: userId } = useParams()
   const session = useSession()
   const [selected, setSelected] = useState<selectedProps>('upcom')
-  const [prevEvents, setPrevEvents] = useState()
+  const [prevEvents, setPrevEvents] = useState<any[]>()
+
+  const router = useRouter()
 
   useEffect(() => {
-    // if there are no upcoming events, set selected to previous
-    if (!events.length) setSelected('prev')
+    (async() => {
+      // if there are no upcoming events, set selected to previous
+      if (!events.length) setSelected('prev')
+    })()
   }, [])
   
 
@@ -47,7 +51,11 @@ const ProfileCollection = ({ events, title, buttonText, emptyText, type, buttonH
     }
     getEvents()
   }, [selected, session])
-  
+
+  const handleDeleteOne = (type: selectedProps, id: number) => {
+    if (type == 'upcom') router.refresh()
+    else setPrevEvents(prev => prev.filter(event => event.id != id))
+  }
 
   // Select the previous or upcoming events
   const handleSelect = (s:selectedProps) => () => setSelected(s)
@@ -66,7 +74,15 @@ const ProfileCollection = ({ events, title, buttonText, emptyText, type, buttonH
         <span style={{ left: selected == 'prev' ? '-50%' : '50%' }}></span>
       </div>
 
-      <Collection events={selected == 'upcom' ? events : prevEvents} emptyText={emptyText} type={type} loading={!prevEvents && selected == 'prev'} isAttend={type == 'My_Tickets'} editable={type == 'Organized_Events' && events?.[0]?.creator == session.data?.user?.id} />
+      <Collection
+        events={selected == 'upcom' ? events : prevEvents}
+        emptyText={emptyText}
+        type={type}
+        loading={!prevEvents && selected == 'prev'}
+        isAttend={type == 'My_Tickets'}
+        editable={type == 'Organized_Events' && (selected == 'upcom' ? events : prevEvents)?.[0]?.creator == session.data?.user?.id}
+        handleDeleteOne={handleDeleteOne}
+      />
 
     </div>
   );

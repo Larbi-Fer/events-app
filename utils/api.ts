@@ -23,7 +23,8 @@ export const getComments = async (eventId: number, limit: [number, number]) => a
 export const insertComment = async (data: { authorId: number, eventId: number, text: string, reply?: number }) => await api.post('/api/event/comments', data)
 export const deleteComment = async (commentId: number) => await api.delete('/api/event/comments', { commentId })
 
-export const getEventsData = async (type: 'My_Tickets' | 'Organized_Events', id: number | string, email: string) => await api.get(`/api/profile/${id}?type=${type}&userEmail=${email}`)
+export const getEventsData = async (type: 'My_Tickets' | 'Organized_Events' | '', id: number | string, email: string) => await api.get(`/api/profile/${id}?type=${type}&userEmail=${email}`)
+export const deleteEvent = async (id: number, creator: number) => await api.delete(`/api/event/delete/${id}`, {creator})
 
 export const follow = async (follower: number, followed: number) => await api.post(`/api/profile/follow`, { follower, followed })
 export const getFollow = async (type: 'followers' | 'following', id: number) => await api.get(`/api/profile/follow/${id}?type=${type}`)
