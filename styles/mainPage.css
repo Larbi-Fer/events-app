@@ -1,0 +1,47 @@
+.container {
+    margin: 0 auto;
+    height: calc(100vh - 80px);
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.container h1 {
+    text-align: center;
+    margin: 10px;
+    font-size: 30px;
+}
+
+.container p {
+    margin-top: 40px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.container.c2 > div:first-child {
+    width: 55%;
+    margin: 10% 0;
+}
+
+.container.c2 > div:last-child {
+    height: max-content;
+    width: 45%;
+    max-height: 500px;
+    overflow: hidden;
+}
+
+.container.c2 > div:last-child > div {
+    animation: 19s up infinite ease-in-out;
+}
+
+.container.c2 > div:last-child img {
+    max-width: 400px;
+}
+
+@keyframes up {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-57%);
+    }
+}

@@ -1,19 +1,28 @@
-'use client'
-
-import Button from "@components/ui/Button";
-import Message from "@components/ui/Message";
-import { useState } from "react";
-
-/* export const metadata = {
-  title: 'Events - for share your events'
-} */
+import '@styles/mainPage.css'
 
 export default function Home() {
-  const [t, setT] = useState(false);
+  const imgs = [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3]
+  let i = 0
   return (
     <div>
-      <Button onClick={() => setT(true)}>Test</Button>
-      <Message show={t} onClose={() => setT(false)} buttons={[{text: 'OK'}]} title='Message'>Test</Message>
+      <div class="container c2">
+        <div>
+          <h1>Welcome to our Events App</h1>
+          <p>Thanks to this application, users can create educational courses and activities, as well as participate in exciting cultural and sporting events.</p>
+        </div>
+
+        <div>
+          <div>
+            {
+              imgs.map((img) => {
+                i = (i+1) % 2;
+                return (
+                  <div dir={ i == 0 ? 'ltr' : 'rtl' }> <img src={`/main/${img}.png`} alt="" /> </div>
+                )})
+              }
+          </div>
+        </div>
+    </div>
     </div>
   );
 }

@@ -158,17 +158,19 @@ header .show-items span {
     text-decoration: none;
     padding: 10px;
     border-radius: 10px;
-    transition: all .3s ease-in-out;
+    transition: all .2s ease-in-out;
     position: relative;
     margin-top: 5px;
 }
 
 .notifications .notif:hover {
     background-color: #ddd6;
+    box-shadow: 0 0 5px #1112;
 }
 
 .notifications .notif.new {
     background-color: #ddd6;
+    box-shadow: 0 0 5px #1112;
 }
 
 .notifications .notif.new::before {

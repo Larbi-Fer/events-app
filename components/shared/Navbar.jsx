@@ -45,11 +45,13 @@ const Navbar = () => {
     await readNotifications(session.data.user.id)
   }
 
+  const handleSignOut = async() => await signOut();
+
   return (
     <>
       <div className={showNotif ? 'back-box' : ''} onClick={() => setShowNotif(false)}></div>
       <header className="fade">
-        <h2 className="logo pan">Events</h2>
+        <h2 className="logo pan">{session.data && session.data.user.username}</h2>
         <nav ref={navRef}>
           { session.data ?
           <ul className="nav-links">
@@ -63,7 +65,7 @@ const Navbar = () => {
           { session.data ?
               <>
                 <Search />
-                <Button className="pan d4" round onClick={async() => await signOut()}>{session.data.user.username}</Button>
+                <Button className="pan d4" round onClick={handleSignOut}>SIGN OUT</Button>
               </>
             :
               <>
