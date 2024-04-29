@@ -30,7 +30,7 @@
 }
 
 .container.c2 > div:last-child > div {
-    animation: 19s up infinite ease-in-out;
+    animation: 19s up infinite linear;
 }
 
 .container.c2 > div:last-child img {
