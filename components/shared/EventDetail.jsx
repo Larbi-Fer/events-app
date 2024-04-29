@@ -14,11 +14,15 @@ import { useSession } from 'next-auth/react';
 import AttendUsers from './AttendUsers';
 import Comments from './Comments';
 import Loading from '@components/ui/Loading';
+import { useRouter } from 'next/navigation';
 
 const EventDetail = ({ id }) => {
   const [event, setEvent] = useState()
+  const [loading, setLoading] = useState(false)
   const [dueDate, setDueDate] = useState()
   const session = useSession();
+
+  const router = useRouter()
 
   useEffect(() => {
     
@@ -27,8 +31,7 @@ const EventDetail = ({ id }) => {
       const data = await getEvent(id, session.data?.user.id)
       if (!data.success) return
       document.title = data.event.title + ' | event'
-      setDueDate(new Date(data.event.isDue ? data.event.dueDate : data.event.startDate))
-      console.log(data.event, session.data)
+      setDueDate(new Date(data.event.isDue ? data.event.dueDate : data.event.endDate))
       setEvent(data.event)
     }
     if (session.status == 'loading' || event) return
@@ -37,9 +40,10 @@ const EventDetail = ({ id }) => {
 
   const handleAttend = async() => {
     if (!session.data || new Date() > dueDate) return
+    setLoading(true)
     const { data } = await setAttend(session.data.user.id, event.id);
-    console.log(data)
     setEvent( old => ({...old, attend: old.attend + ( data.isAttend ? 1 : -1 ), user: {...old.user, isAttend: data.isAttend}}) )
+    setLoading(false)
   }
 
   return (
@@ -57,7 +61,7 @@ const EventDetail = ({ id }) => {
           <div className="right">
             <h1 className='title rise'>{event.title}</h1>
             <div className="tags rise d1">
-              { event.tags?.split(',').map(tag => <label>{tag}</label>) }
+              { event.tags?.split(',').map(tag => <label onClick={() => router.push(`/home?tag=${tag}`)}>{tag}</label>) }
             </div>
 
             <div className="location rise d2">
@@ -88,7 +92,7 @@ const EventDetail = ({ id }) => {
             { event.attendButton &&
               <div className="attend">
                 <div className="button">
-                  <Button onClick={handleAttend} disabled={(new Date() > dueDate || (((event.isMax && event.attend >= event.max) || !session.data) && !event.user.isAttend))}>
+                  <Button onClick={handleAttend} disabled={(new Date() > dueDate || (((event.isMax && event.attend >= event.max) || !session.data) && !event.user.isAttend)) || loading} className={loading ? 'loading' : ''}>
                     {session.data ? (event.user.isAttend ? 'CANCEL' : 'I WILL ATTEND') : 'LOGIN TO ATTEND'}
                   </Button>
                   <span className={event.isMax && event.attend >= event.max ? 'disabled' : null}>

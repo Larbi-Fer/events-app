@@ -19,7 +19,6 @@ const Verification = ({afterClose}) => {
   const onSubmit = async e => {
     e.preventDefault()
     if(!code) {
-      console.log(ref.current)
       ref.current?.classList.add('vibration')
       setTimeout(() => ref.current?.classList.remove('vibration'), 500)
       return
@@ -29,6 +28,7 @@ const Verification = ({afterClose}) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
     })).json()).result
+    console.log(data);
 
     if (!data?.success) return setMsg(data?.message)
     afterClose() // clear the password field

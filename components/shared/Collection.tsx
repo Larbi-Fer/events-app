@@ -1,4 +1,9 @@
+'use client'
+
+import { deleteEvent } from "@utils/api"
 import Card from "./Card"
+import Message from "@components/ui/Message"
+import { useState } from "react"
 
 type CollectionProps = {
   events: any[],
@@ -6,9 +11,23 @@ type CollectionProps = {
   loading?: boolean,
   isAttend?: boolean,
   editable: boolean,
+  handleDeleteOne: (type: 'upcom' | 'prev', id: number) => any
 }
 
-const Collection = ({ events, emptyText, loading, isAttend, editable }: CollectionProps) => {
+const Collection = ({ events, emptyText, loading, isAttend, editable, handleDeleteOne }: CollectionProps) => {
+  const [idForDeleteing, setIdForDeleteing] = useState<[number, boolean]>([null, false])
+  const [loadingForDeleting, setLoadingForDeleting] = useState(false)
+
+  const handleDelete = async() => {
+    setLoadingForDeleting(true)
+    setIdForDeleteing([idForDeleteing[0], false])
+
+    const event = events.find(event => event.id == idForDeleteing[0])
+    await deleteEvent(idForDeleteing[0], event.creator)
+    handleDeleteOne( new Date(event.isDue ? event.dueDate : event.endDate) > new Date() ? 'upcom' : 'prev', idForDeleteing[0] )
+    setLoadingForDeleting(false)
+    setIdForDeleteing([null, false])
+  }
 
   return (
     <div className={"collection" + (loading ? ' loading' : '')}>
@@ -25,11 +44,21 @@ const Collection = ({ events, emptyText, loading, isAttend, editable }: Collecti
             // if there are events
             events?.map((event, i) => {
               event.isAttend = isAttend ? isAttend : event.isAttend
-              return <Card data={event} i={i} key={event.id} editable={editable} />
+              return <Card data={event} i={i} key={event.id} editable={editable} deleteEvent={id => setIdForDeleteing([id, true])} blur={loadingForDeleting && event.id == idForDeleteing[0]} />
             }
             )
         }
       </div>
+
+      <Message
+        title="Delete Event!"
+        show={idForDeleteing[1]}
+        onClose={() => setIdForDeleteing([null, false])}
+        width="sm"
+        buttons={[{ text: 'DELETE', onClick: handleDelete }]}
+      >
+        Are you sure?
+      </Message>
 
     </div>
   )

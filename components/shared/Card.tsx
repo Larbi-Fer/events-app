@@ -1,3 +1,5 @@
+'use client'
+
 import { Moment } from "moment"
 
 import Link from "next/link"
@@ -21,12 +23,15 @@ type CardProps = {
   },
   editable?: boolean,
   i?: number,
+
+  deleteEvent?: (id: int) => any
+  blur?: boolean
 }
 
-const Card = ({ data, editable, i } : CardProps) => {
+const Card = ({ data, editable, i, deleteEvent, blur } : CardProps) => {
 
   return (
-    <div className="event-card rise" style={{ "--delay": `${i ? i*100 : 0}ms` }}>
+    <div className={"event-card rise" + (blur ? ' event-blur' : '')} style={{ "--delay": `${i ? i*100 : 0}ms` }}>
     
       <div className="image">
         <img src={data.image} alt="" draggable={false} />
@@ -34,7 +39,7 @@ const Card = ({ data, editable, i } : CardProps) => {
 
       {editable && <div className="tools">
         <div className="edit"><EditIcon fontSize="small" /></div>
-        <div className="delete"><DeleteIcon fontSize="small" /></div>
+        <div className="delete" onClick={() => deleteEvent(data.id)}><DeleteIcon fontSize="small" /></div>
       </div>}
 
       <Link href={`/event/${data.id}`} className="content">

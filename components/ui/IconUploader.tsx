@@ -5,10 +5,8 @@ import { useDropzone } from "@uploadthing/react";
 import { useCallback } from "react";
 import { generateClientDropzoneAccept } from "uploadthing/client";
 import { convertFileToUrl } from '@utils'
-import Button from "./Button";
 
-function IconUploader({ imageUrl, onFieldChange, setFiles, text } = { imageUrl: '', onFieldChange: (url='') => null, text: '' }) {
-  // console.log(generateClientDropzoneAccept())
+function IconUploader({ imageUrl, onFieldChange, setFiles, text } : { imageUrl: '', onFieldChange: (url: string) => any, text: '', setFiles: (x: any) => any }) {
   const onDrop = useCallback((acceptedFiles) => {
     setFiles(acceptedFiles);
     onFieldChange(convertFileToUrl(acceptedFiles[0]));
@@ -26,7 +24,7 @@ function IconUploader({ imageUrl, onFieldChange, setFiles, text } = { imageUrl: 
         <input {...getInputProps()} />
         {imageUrl ? (
           <div>
-            <img src={imageUrl} alt="Image" />
+            <img src={imageUrl} alt="Image" className="icon" style={{margin: '0'}} />
           </div>
         ) : <div> Drop your icon here! </div>}
       </div>
