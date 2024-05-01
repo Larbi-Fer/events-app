@@ -1,8 +1,8 @@
 ## Events Web Application
 ### Project for 2nd year
-    Through this application, users can create courses and educational activities, as well as participate in exciting cultural and sporting events.
+- Through this application, users can create courses and educational activities, as well as participate in exciting cultural and sporting events.
 
-    The application database is designed to enable efficient user management. Each user can create a personalized profile with information such as their email address, username and profile picture. Activating accounts through verification codes ensures user security and authenticity.
+- The application database is designed to enable efficient user management. Each user can create a personalized profile with information such as their email address, username and profile picture. Activating accounts through verification codes ensures user security and authenticity.
 
 
 ## What can the user do?
