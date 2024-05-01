@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useUploadThing } from '@utils/uploadthing'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -46,6 +46,15 @@ const EventForm = ({ type }) => {
   const handleChange = e => {
     setFlds(old => ({ ...old, [e.target.name]: e.target.value}))
   }
+
+  useEffect(() => {
+    if (session.status == 'loading') return
+    if (session.status == 'unauthenticated') {
+      setMsg(['Login first', 'warning'])
+      router.replace('/login')
+    }
+  }, [session])
+  
 
   // To change time fields only
   const handleChangeDate = e => {

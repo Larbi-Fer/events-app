@@ -61,15 +61,19 @@
     margin-left: 15px;
 }
 
-.event .right .location, .event .right .schedule {
+.event .right .location, .event .right .schedule, .event .right .url {
     display: flex;
     align-items: center;
     margin: 10px 0;
 }
 
-.event .right .location i, .event .right .schedule i {
+.event .right .location i, .event .right .schedule i, .event .right .url i {
     margin-right: 5px;
     color: var(--primary-background);
+}
+
+.event .right .location i, .event .right .url i {
+    padding-top: 5px;
 }
 
 .event .right .url {
@@ -203,4 +207,21 @@ body {
 
 .attend-users tr td a {
     text-decoration: none;
+}
+
+
+.not-found {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.not-found img {
+    width: 100%;
+    max-width: 450px;
+}
+
+.not-found p {
+    text-align: center;
 }

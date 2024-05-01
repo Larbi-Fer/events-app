@@ -1,20 +1,23 @@
 'use client'
 
 import '@styles/eventDetail.css'
-import PlaceIcon from '@mui/icons-material/LocationOnOutlined';
-import CalendarIcon from '@mui/icons-material/DateRangeOutlined';
+
 import { useEffect, useState } from 'react'
-import { getEvent } from '@utils/api'
-import { dateBetween } from '@utils'
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+
 import Link from 'next/link';
 import Button from '@components/ui/Button';
-import { fromNow } from '@/utils';
-import { setAttend } from '../../utils/api';
-import { useSession } from 'next-auth/react';
 import AttendUsers from './AttendUsers';
 import Comments from './Comments';
 import Loading from '@components/ui/Loading';
-import { useRouter } from 'next/navigation';
+
+import { getEvent, setAttend } from '@utils/api'
+import { dateBetween, fromNow } from '@utils'
+
+import CalendarIcon from '@mui/icons-material/DateRangeOutlined';
+import PlaceIcon from '@mui/icons-material/LocationOnOutlined';
+import LinkIcon from '@mui/icons-material/Link';
 
 const EventDetail = ({ id }) => {
   const [event, setEvent] = useState()
@@ -29,7 +32,10 @@ const EventDetail = ({ id }) => {
     const getData = async() => {
       // session.update({ test: 123 })
       const data = await getEvent(id, session.data?.user.id)
-      if (!data.success) return
+      if (!data.success) {
+        setEvent('Not Found')
+        return
+      }
       document.title = data.event.title + ' | event'
       setDueDate(new Date(data.event.isDue ? data.event.dueDate : data.event.endDate))
       setEvent(data.event)
@@ -47,7 +53,7 @@ const EventDetail = ({ id }) => {
   }
 
   return (
-    event ?
+    event && event !== 'Not Found' ?
       <div className="event">
         <div className="c2">
           <div className="left">
@@ -80,6 +86,7 @@ const EventDetail = ({ id }) => {
             </div>
 
             <div className="url d7 rise">
+              <i><LinkIcon /></i>
               <Link href={event.url} target='_blank'>{event.url}</Link>
             </div>
 
@@ -120,7 +127,14 @@ const EventDetail = ({ id }) => {
         }
 
       </div>
-    : <Loading />
+    : (
+      event === 'Not Found'
+        ? <div className='not-found'>
+            <img src="/icons/404.jpg" alt="404" />
+            <p>The event was not found, or was deleted</p>
+          </div>
+        : <Loading />
+    )
   )
 }
 
