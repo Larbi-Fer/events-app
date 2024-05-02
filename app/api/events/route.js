@@ -15,7 +15,7 @@ export const GET = async(req) => {
         } else if (q) {
             conditions += `WHERE tags LIKE '%${q}%' OR title LIKE '%${q}%' OR description LIKE '%${q}%'`
         }
-        const query = `SELECT * FROM events ${conditions} ORDER BY id DESC LIMIT ?, ?`
+        const query = `SELECT * FROM events ${conditions} ORDER BY id DESC`
         const [res] = await db.execute(query, [start, showEventsLimit]);
         db.end()
 

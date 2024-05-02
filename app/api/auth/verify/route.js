@@ -22,6 +22,7 @@ export const POST = async req => {
                 }
             })
         })
+        db.end()
         return NextResponse.json({OK: true, result});
     } catch (error) {
         return NextResponse.json({OK: false, success: false, error});

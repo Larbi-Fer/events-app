@@ -36,7 +36,7 @@ export const authOptions = {
     })
   ],
   callbacks: {
-    async session({ session, tok }) {
+    async session({ session }) {
       // store the user id from DataBase to session
       const db = await dbConnection()
       const [result] = await db.execute('SELECT id, email, username, image FROM users WHERE email = ?', [session.user.email])

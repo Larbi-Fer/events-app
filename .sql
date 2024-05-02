@@ -3,10 +3,10 @@ SET time_zone = "+00:00";
 USE events;
 
 CREATE TABLE users(
-    id INT PRIMARY KEY AUTO,
-    Email VARCHAR(30) UNIQUE,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(30) UNIQUE,
     username VARCHAR(100),
-    Password VARCHAR(255),
+    password VARCHAR(255),
     image VARCHAR(100),
     active BOOLEAN
 );
@@ -55,10 +55,10 @@ CREATE TABLE comments (
     authorId INT,
     eventId INT,
     `text` TEXT,
-    `date` DATETIME,,
+    `date` DATETIME,
     reply INT,
     CONSTRAINT FOREIGN KEY(reply) REFERENCES comments(id) ON DELETE CASCADE,
-    CONSTRAINT FOREIGN KEY(creator) REFERENCES users(id),
+    CONSTRAINT FOREIGN KEY(authorId) REFERENCES users(id),
     CONSTRAINT FOREIGN KEY(eventId) REFERENCES events(id)
 );
 
@@ -80,7 +80,7 @@ CREATE TABLE notifications (
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     isRead BOOLEAN DEFAULT FALSE,
     isOpen BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (userID) REFERENCES users(id)
+    FOREIGN KEY (userID) REFERENCES users(id),
     FOREIGN KEY (relatedUser) REFERENCES users(id)
 );
 
