@@ -7,7 +7,7 @@ CREATE TABLE users(
     email VARCHAR(30) UNIQUE,
     username VARCHAR(100),
     password VARCHAR(255),
-    image VARCHAR(100),
+    image VARCHAR(100) DEFAULT '/profile.jpg',
     active BOOLEAN
 );
 

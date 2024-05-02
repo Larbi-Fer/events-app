@@ -6,7 +6,7 @@ import { compare } from 'bcrypt';
 import dbConnection from '@utils/db';
 import code from '@utils/responses';
 
-export const authOptions = {
+const authOptions = {
   providers: [
     Credentials({
       credentials: {
