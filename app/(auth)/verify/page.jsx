@@ -5,7 +5,7 @@ export const metadata = {
 
 const Verify = () => {
   return (
-    null
+    <div>Verify</div>
   )
 }
 
