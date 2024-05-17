@@ -36,7 +36,7 @@ const EventDetail = ({ id }) => {
         setEvent('Not Found')
         return
       }
-      document.title = data.event.title + ' | event'
+      // document.title = data.event.title + ' | event'
       setDueDate(new Date(data.event.isDue ? data.event.dueDate : data.event.endDate))
       setEvent(data.event)
     }
