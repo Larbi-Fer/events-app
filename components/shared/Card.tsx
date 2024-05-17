@@ -28,10 +28,18 @@ type CardProps = {
   blur?: boolean
 }
 
+interface CustomCSSProperties extends React.CSSProperties {
+  '--delay'?: string;
+}
+
 const Card = ({ data, editable, i, deleteEvent, blur } : CardProps) => {
 
+  const style: CustomCSSProperties = {
+    '--delay': `${i ? i * 100 : 0}ms`,
+  };
+
   return (
-    <div className={"event-card rise" + (blur ? ' event-blur' : '')} style={{ "--delay": `${i ? i*100 : 0}ms` }}>
+    <div className={"event-card rise" + (blur ? ' event-blur' : '')} style={style}>
     
       <div className="image">
         <img src={data.image} alt="" draggable={false} />

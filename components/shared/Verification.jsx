@@ -11,7 +11,7 @@ const Verification = ({afterClose}) => {
   const pathname = usePathname()
   const router = useRouter()
   const email = useSearchParams().get('email')
-  const ref = useRef()
+  const ref = useRef<HTMLDivElement>(null)
 
   const [code, setCode] = useState()
   const [msg, setMsg] = useState()

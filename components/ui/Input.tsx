@@ -17,10 +17,12 @@ type InputProps = {
     Icon?: ReactJSXElement,
     IconAsButton?: ReactJSXElement,
     loading?: boolean,
+    className?: any,
+    [key: string]: any
 }
 
-const Input = ({ text, round, fullWidth, variant='default', onChange, multiLine, inpRef, required, Icon, IconAsButton, className, loading=false, ...props } : InputProps & InputHTMLAttributes<HTMLInputElement>) => {
-    const ref = useRef()
+const Input = ({ text, round, fullWidth, variant='default', onChange, multiLine, inpRef, required, Icon, IconAsButton, className, loading=false, ...props } : InputProps) => {
+    const ref = useRef<HTMLDivElement>(null)
 
     var style : { paddingLeft?: string, paddingRight?: string } = {}
     var cls = ''
@@ -45,7 +47,7 @@ const Input = ({ text, round, fullWidth, variant='default', onChange, multiLine,
     return (
         <div ref={ref} className={'inp' + cls + (loading ? ' loading' : '') + ' ' + variant + ' ' + className}>
             { multiLine ?
-                <textarea required={required} onChange={change} id={`id-${props.name}`}  ref={inpRef} {...props} style={style} /> :
+                <textarea  required={required} onChange={change} id={`id-${props.name}`}  ref={inpRef} {...props} style={style} /> :
                 <input type="text" {...props} required={required} onChange={change} id={`id-${props.name}`}  ref={inpRef} className={round && 'round'} style={style} />
             }
             { IconAsButton && <div className="icon-btn">{IconAsButton}</div> }

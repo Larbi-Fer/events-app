@@ -1,21 +1,34 @@
 {
   "compilerOptions": {
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "esnext",
+      "ES2015"
     ],
     "allowJs": true,
-    "skipLibCheck": true,
     "strict": false,
-    "noEmit": true,
     "incremental": true,
-    "esModuleInterop": true,
     "module": "esnext",
+    "jsx": "preserve",
+
+    "noImplicitAny": false, // Allow variables to have implicit 'any' type
+    "strictNullChecks": false, // Disable strict null checks
+    "strictFunctionTypes": false, // Disable strict function types
+    "strictBindCallApply": false, // Disable strict bind/call/apply
+    "strictPropertyInitialization": false, // Disable strict property initialization
+    "noImplicitThis": false, // Allow 'this' to have implicit 'any' type
+    "alwaysStrict": false, // Disable emitting 'use strict' directives
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "allowSyntheticDefaultImports": true, // Allow default imports from modules with no default export
+    "esModuleInterop": true, // Enable esModuleInterop
+    "forceConsistentCasingInFileNames": true, // Ensure consistent file naming
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "noEmit": true,
+
     "plugins": [
       {
         "name": "next"

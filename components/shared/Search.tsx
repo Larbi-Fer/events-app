@@ -11,7 +11,7 @@ const Search = () => {
     // Change the search field if parameter `q` or `tag` is present
     const val = search.get('q') || (search.get('tag') ? '#' + search.get('tag') : '');
 
-    const searchField = document.getElementById('searchField')
+    const searchField : { [key: string]: any } = document.getElementById('searchField')
 
     if (searchField && searchField.value != val) searchField.value = val
   }, [search])

@@ -6,7 +6,7 @@ import { useCallback } from "react";
 import { generateClientDropzoneAccept } from "uploadthing/client";
 import { convertFileToUrl } from '@utils'
 
-function IconUploader({ imageUrl, onFieldChange, setFiles, text } : { imageUrl: '', onFieldChange: (url: string) => any, text: '', setFiles: (x: any) => any }) {
+function IconUploader({ imageUrl, onFieldChange, setFiles, text } : { imageUrl: string, onFieldChange: (url: string) => any, text: string, setFiles: (x: any) => any }) {
   const onDrop = useCallback((acceptedFiles) => {
     setFiles(acceptedFiles);
     onFieldChange(convertFileToUrl(acceptedFiles[0]));

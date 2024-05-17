@@ -7,7 +7,7 @@ import { generateClientDropzoneAccept } from "uploadthing/client";
 import { convertFileToUrl } from '@utils'
 import Button from "./Button";
 
-function FileUploader({ imageUrl, onFieldChange, setFiles, text } = { imageUrl: '', onFieldChange: (url='') => null, text: '' }) {
+function FileUploader({ imageUrl, onFieldChange, setFiles, text }) {
   // console.log(generateClientDropzoneAccept())
   const onDrop = useCallback((acceptedFiles) => {
     setFiles(acceptedFiles);

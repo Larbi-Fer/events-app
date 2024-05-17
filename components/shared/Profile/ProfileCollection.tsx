@@ -9,6 +9,7 @@ import Collection from '@components/shared/Collection';
 import Button from '@components/ui/Button';
 
 import { getEventsData } from '@utils/api';
+import { Session } from 'inspector';
 
 type ProfileCollectionProps = {
   events: any[],
@@ -22,10 +23,13 @@ type ProfileCollectionProps = {
 type selectedProps = 'upcom' | 'prev'
 
 const ProfileCollection = ({ events, title, buttonText, emptyText, type, buttonHref } : ProfileCollectionProps) => {
-  const { id: userId } = useParams()
-  const session = useSession()
+  var { id: userId } = useParams()
+  const session : { [key: string]: any } = useSession()
+  // const session : SessionContextValue & { update: UpdateSession data: Session & { user: {id: string | number } } } = useSession()
+  // const [session, setSession] = useState(null)
   const [selected, setSelected] = useState<selectedProps>('upcom')
   const [prevEvents, setPrevEvents] = useState<any[]>()
+  
 
   const router = useRouter()
 
@@ -35,6 +39,13 @@ const ProfileCollection = ({ events, title, buttonText, emptyText, type, buttonH
       if (!events.length) setSelected('prev')
     })()
   }, [])
+
+  /* useEffect(() => {
+    if(sess.status == "loading") return
+    const s : {  } = sess
+    setSession(sess)
+  }, [sess]) */
+  
   
 
   // get previous events if the selected is previous
@@ -44,7 +55,7 @@ const ProfileCollection = ({ events, title, buttonText, emptyText, type, buttonH
     if (selected == 'upcom' || prevEvents) return
 
     const getEvents = async() => {
-      const data = await getEventsData(type, userId, session.data?.user?.email)
+      const data = await getEventsData(type, parseInt(userId as string), session.data?.user?.email)
 
       if (!data.success) return
       setPrevEvents(data.events)
@@ -77,7 +88,6 @@ const ProfileCollection = ({ events, title, buttonText, emptyText, type, buttonH
       <Collection
         events={selected == 'upcom' ? events : prevEvents}
         emptyText={emptyText}
-        type={type}
         loading={!prevEvents && selected == 'prev'}
         isAttend={type == 'My_Tickets'}
         editable={type == 'Organized_Events' && (selected == 'upcom' ? events : prevEvents)?.[0]?.creator == session.data?.user?.id}

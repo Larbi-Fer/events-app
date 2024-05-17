@@ -14,7 +14,7 @@ import IconUploader from "@components/ui/IconUploader"
 import { useUploadThing } from "@utils/uploadthing"
 
 const ProfileInfo = ({ user: userPass }) => {
-  const session = useSession()
+  const session : { [key: string]: any } = useSession()
   const [load, setLoad] = useState(false)
   const [user, setUser] = useState(userPass)
   const [followUsers, setFollowUsers] = useState<'followers' | 'following' | null>()

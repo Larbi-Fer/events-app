@@ -43,7 +43,7 @@ const EventsList = ({ q, tag } : EventsListProps) => {
 
   return (
     <div>
-      <Collection events={events} editable={false} emptyText="Come back later" loading={loading} />
+      <Collection events={events} editable={false} emptyText="Come back later" loading={loading} handleDeleteOne={(t, i) => {}} />
       {
         eventsNum != 0 && (eventsNum % showEventsLimit) == 0 && !loading && <Button onClick={loadMore} className="load-more">Load More</Button>
       }
