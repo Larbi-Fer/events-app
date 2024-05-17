@@ -126,3 +126,7 @@
     background-color: transparent;
     z-index: 10;
 }
+
+.comments-img {
+    width: 250px;
+}
