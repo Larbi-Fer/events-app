@@ -30,6 +30,7 @@ yarn-error.log*
 /.env
 
 /description.docx
+/description.pdf
 
 # vercel
 .vercel

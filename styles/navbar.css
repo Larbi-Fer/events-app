@@ -26,6 +26,8 @@ nav li, nav a, .buttons button {
 
 .logo {
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .nav-links {

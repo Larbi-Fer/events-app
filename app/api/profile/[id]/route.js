@@ -21,12 +21,14 @@ export const GET = async(req, { params: { id } }) => {
         // If the current user requested old and specific events (My_Tickets or Organized_Events)
         if (type == 'My_Tickets') {
             const [events] = await db.execute('SELECT events.*, username FROM events, attendees, users WHERE attendees.userId = ? AND events.startDate < NOW() AND attendees.isAttend AND attendees.eventId = events.id AND events.creator = users.id', [id])
+            db.end()
             return NextResponse.json({ success: true, events})
         } else if (type == 'Organized_Events') {
             let q = user ?
-                'SELECT events.*, attendees.isAttend FROM events LEFT JOIN attendees ON events.id = attendees.eventId AND attendees.userId = ? WHERE creator = ? AND startDate < NOW()' :
-                'SELECT * FROM events WHERE creator=? AND startDate < now()'
+            'SELECT events.*, attendees.isAttend FROM events LEFT JOIN attendees ON events.id = attendees.eventId AND attendees.userId = ? WHERE creator = ? AND startDate < NOW()' :
+            'SELECT * FROM events WHERE creator=? AND startDate < now()';
             const [events] = await db.execute(q, user ? [user.id, id] : [id])
+            db.end()
 
             return NextResponse.json({ success: true, events})
         }

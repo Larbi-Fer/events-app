@@ -18,20 +18,24 @@ export const POST = async req => {
 
         // Edit some fields
         if (!body.imageUrl) pushToQu('image', 'https://images/defaultEvent')
-        else pushToQu('image', body.imageUrl)
+            else pushToQu('image', body.imageUrl)
         if (body.dueDate.is) pushToQu('dueDate', body.dueDate.date)
         if (body.max.is) pushToQu('max', body.max.num)
-
-        const qu = 'INSERT INTO events (' + keys.join(', ') + ') VALUES (' + keys.map((v, i) => '?') + ')'
-        const db = await dbConnection()
-        
-        const [result] = await db.execute(qu, params)
-        
+            
+            const qu = 'INSERT INTO events (' + keys.join(', ') + ') VALUES (' + keys.map((v, i) => '?') + ')'
+            const db = await dbConnection()
+            
+            const [result] = await db.execute(qu, params)
+            
         // Send a notification to users
         const [users] = await db.execute('SELECT follower FROM followers WHERE followed = ? AND isFollow = true', [body.creator]);
+        if (!users.length) {
+            db.end()
+            return NextResponse.json({ success: true, id: result.insertId })
+        }
         const [[creator]] = await db.execute('SELECT * FROM users WHERE id = ?', [body.creator]);
         const rows = users.map(user => `(${user.follower}, ${body.creator}, '${creator.username} created a new event - ${body.title}', '/event/${result.insertId}')`).join(', ')
-        
+
         await db.execute('INSERT INTO notifications(userId, relatedUser, message, redirectUrl) VALUES ' + rows)
     
         db.end()

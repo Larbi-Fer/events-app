@@ -12,7 +12,7 @@ export const POST = async (req, res) => {
         if (data.length) {
             await db.execute('UPDATE attendees SET isAttend=?, orderDate=? WHERE eventId = ? and userId = ?', [!data[0].isAttend, new Date(), eventId, userId])
         } else {
-            await db.execute('INSERT INTO attendees VALUES (?, ?, ?, ?, ?)', [userId, eventId, new Date(), 1, 0])
+            await db.execute('INSERT INTO attendees VALUES (?, ?, ?, ?)', [userId, eventId, new Date(), 1])
         }
 
         db.end()

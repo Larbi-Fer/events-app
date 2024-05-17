@@ -103,7 +103,7 @@ const ProfileInfo = ({ user: userPass }) => {
                 <IconUploader text='Cover' setFiles={setFiles} imageUrl={editIcon[1]} onFieldChange={url => setEditIcon(prev => [prev[0], url])} />
                 <div className="group">
                   <Button disabled={!files.length || loading == 'icon'} variant="secondary" round onClick={editProfileIcon} className={loading == 'icon' ? 'loading' : ''}>Save</Button>
-                  <Button round onClick={() => setEditIcon(prev => [false, prev[1]])}>Cancel</Button>
+                  <Button round onClick={() => setEditIcon(prev => [false, prev[1]])} disabled={loading == 'icon'}>Cancel</Button>
                 </div>
               </>
             : <img src={user.image} alt="avatar" className='icon' onDoubleClick={() => user.id == session.data.user.id && setEditIcon(prev => [true, prev[1]])} />}
@@ -116,7 +116,7 @@ const ProfileInfo = ({ user: userPass }) => {
               <input ref={editRef} defaultValue={user.username} onBlur={() => setEditUser(false)} style={{textAlign: 'center', background: 'transparent', outline: 'none', border: 'none'}} />
             </form> 
           }
-          <div className="email">{user.email}</div>
+          <div className="email" style={{ textOverflow: 'ellipsis', overflow: 'hidden'}}>{user.email.length > 24 ? user.email.slice(0, 26) : user.email}</div>
         </div>
         <div className="button-container">
 
