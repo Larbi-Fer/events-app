@@ -136,7 +136,11 @@ const Comments = ({ eventId, eventCreatorId, user, fullWidth } : CommentsProps) 
               </Message>
             </>
           :
-            <div>No comment</div>
+            <div className='empty-notif'>
+              <img src="/comments.jpg" alt="comments" className='comments-img' />
+              <h2>No comments yet</h2>
+              <p>Be the first to comment</p>
+            </div>
           ) : <Loading />
         }
       </div>
