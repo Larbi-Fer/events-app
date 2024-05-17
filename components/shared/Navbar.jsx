@@ -51,7 +51,15 @@ const Navbar = () => {
     <>
       <div className={showNotif ? 'back-box' : ''} onClick={() => setShowNotif(false)}></div>
       <header className="fade">
-        <h2 className="logo pan">{session.data && session.data.user.username}</h2>
+        <h2 className="logo pan">
+          {session.data ?
+            <>
+              <img src={session.data.user.image} alt="" className="icon" />
+              <div>{session.data && session.data.user.username}</div>
+            </>
+            : <div>Events</div>
+          }
+        </h2>
         <nav ref={navRef}>
           { session.data ?
           <ul className="nav-links">
