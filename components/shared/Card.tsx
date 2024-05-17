@@ -24,7 +24,7 @@ type CardProps = {
   editable?: boolean,
   i?: number,
 
-  deleteEvent?: (id: int) => any
+  deleteEvent?: (id: number) => any
   blur?: boolean
 }
 
