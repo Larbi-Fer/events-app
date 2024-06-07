@@ -4,9 +4,10 @@ import { showEventsLimit } from '@/utils/const'
 
 export const GET = async(req) => {
     try {
-        const params = req.nextUrl.searchParams
-        var start = params.get('start') || 0 || 10, q = params.get('q'), tag = params.get('tag')
-        start = parseInt(start)
+        const url = new URL(req.url)
+        const start = url.searchParams.get('start') || 0,
+            q = url.searchParams.get('q'),
+            tag = url.searchParams.get('tag');
 
         const db = await dbConnection()
         var conditions = ''

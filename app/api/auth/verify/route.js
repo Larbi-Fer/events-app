@@ -4,8 +4,8 @@ import { NextResponse } from "next/server"
 
 // TODO: Edit the messages
 export const POST = async req => {
-    const flds = await req.json()
     try {
+        const flds = await req.json()
         const result = await new Promise((resolve, reject) => {
             db.query(`SELECT users.id, code, active FROM verify, users WHERE email = ? AND users.id = verify.id`, [flds.email], (err, result) => {
                 if (err) return reject(err);
