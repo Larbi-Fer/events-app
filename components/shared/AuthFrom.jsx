@@ -20,7 +20,7 @@ const flds = {
   password: ''
 }
 
-const AuthFrom = () => {
+const AuthFrom = ({ email }) => {
   const router = useRouter()
   const pathname = usePathname()
   const session = useSession()
@@ -71,7 +71,7 @@ const AuthFrom = () => {
 
         <Toast show={msg[0] != ''} text={msg[0]} type={msg[1]} after={() => setMsg('')} />
       </form>
-      <Verification afterClose={() => setFields(f => ({...f, password: ''}))} />
+      <Verification afterClose={() => setFields(f => ({...f, password: ''}))} email={email} />
     </>
   )
 }

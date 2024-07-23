@@ -1,4 +1,4 @@
-import React from 'react'
+import AuthFrom from "@components/shared/AuthFrom";
 
 export const metadata = {
   title: 'Create account'
@@ -6,7 +6,9 @@ export const metadata = {
 
 const Signup = () => {
   return (
-    <div>Signup</div>
+    <div>
+      <AuthFrom email={null} />
+    </div>
   )
 }
 

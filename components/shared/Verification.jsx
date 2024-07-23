@@ -1,17 +1,16 @@
 'use client'
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useRef, useState } from "react"
 
 import Input from "@components/ui/Input"
 import Message from "@components/ui/Message"
 import Toast from "@components/ui/Toast"
 
-const Verification = ({afterClose}) => {
+const Verification = ({afterClose, email}) => {
   const pathname = usePathname()
   const router = useRouter()
-  const email = useSearchParams().get('email')
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef(null)
 
   const [code, setCode] = useState()
   const [msg, setMsg] = useState()

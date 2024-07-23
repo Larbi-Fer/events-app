@@ -1,11 +1,14 @@
+import AuthFrom from "@components/shared/AuthFrom";
 
 export const metadata = {
   title: 'Activation'
 }
 
-const Verify = () => {
+const Verify = ({ searchParams }) => {
   return (
-    <div>Verify</div>
+    <div>
+      <AuthFrom email={searchParams.email} />
+    </div>
   )
 }
 
